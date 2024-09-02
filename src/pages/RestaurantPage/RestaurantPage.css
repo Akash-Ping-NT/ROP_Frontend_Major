@@ -1,0 +1,126 @@
+/* src/components/RestaurantPage.css */
+
+.restaurant-page {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.restaurant-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Banner Styles */
+.restaurant-banner {
+    position: relative;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.restaurant-banner-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.restaurant-banner-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.restaurant-name {
+    font-size: 2em;
+    margin: 0;
+}
+
+.restaurant-hours {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+/* .restaurant-status {
+    font-size: 1.2em;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+} */
+
+.restaurant-status.open {
+    background-color: #4caf50;
+}
+
+.restaurant-status.closed {
+    background-color: #f44336;
+}
+
+/* Menu Item Styles */
+.menu-items-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.menu-item-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.menu-item-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.menu-item-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.menu-item-details {
+    padding: 15px;
+    text-align: center;
+}
+
+.menu-item-name {
+    font-size: 1.5em;
+    margin: 0;
+    color: #333;
+}
+
+.menu-item-description {
+    font-size: 1em;
+    color: #666;
+    margin: 10px 0;
+}
+
+.menu-item-status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.menu-item-status.available {
+    background-color: #4caf50;
+    color: white;
+}
+
+.menu-item-status.not-available {
+    background-color: #f44336;
+    color: white;
+}

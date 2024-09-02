@@ -1,0 +1,150 @@
+/* src/pages/HomePage.css */
+.home-container {
+    text-align: center;
+    /* padding: 20px; */
+}
+
+.home-header {
+    margin-bottom: 40px;
+}
+
+.home-header h1 {
+    font-size: 36px;
+    color: #333;
+}
+
+.home-header p {
+    font-size: 18px;
+    color: #666;
+}
+
+.home-hero {
+    position: relative;
+    /* margin-bottom: 50px; */
+}
+
+.hero-image {
+    width: 100%;
+    height: auto;
+    max-height: 650px;
+    object-fit: cover;
+}
+
+.hero-title {
+    text-align: center;
+    color: #fffcfc;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 40px;
+    font-size: 2.25rem;
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+.hero-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ff6600;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 11px;
+    transition: background-color 0.3s ease;
+    
+}
+
+.hero-button:hover {
+    background-color: #ff4500;
+    text-decoration: none;
+}
+
+.home-features {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.feature {
+    width: 30%;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.feature h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.feature p {
+    font-size: 16px;
+    color: #666;
+}
+
+.home-restaurants {
+    margin-top: 50px;
+}
+
+.home-restaurants h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.restaurant-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.restaurant-card {
+    margin: 10px;
+}
+
+.home-restaurants {
+    margin-top: 50px;
+}
+
+.home-restaurants h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.restaurant-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.restaurant-card {
+    margin: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    /* width: 200px; */
+}
+
+.home-restaurants .restaurant-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    /* gap: 30px; */
+    margin-top: 30px;
+}
+
+
+.home-restaurants-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: black;
+}

@@ -1,0 +1,121 @@
+.menu-manager {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.add-button {
+    padding: 10px 20px;
+    background-color: #626AD6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.add-button:hover {
+    background-color: #5059d9;
+}
+
+.menu-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: white;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+.menu-info-container {
+    display: flex;
+    align-items: center;
+}
+
+.menu-info {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    color: #555;
+}
+
+.menu-info-image {
+    width: 100px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.menu-info-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.menu-info span {
+    margin-bottom: 5px;
+}
+
+.menu-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.menu-actions button {
+    padding: 5px 10px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+
+.modal-content select {
+    width: calc(100% );
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #fff;
+}
+
+
+.menu-actions button:hover {
+    background-color: #218838;
+    color: white;
+}
+
+.menu-actions button:last-child:hover {
+    background-color: #c82333;
+    color: white;
+}
+
+.menu-actions button:nth-child(2):hover {
+    background-color: #735806;
+    color: white;
+}

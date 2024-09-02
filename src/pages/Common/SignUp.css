@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background: linear-gradient(135deg, #4ccefa 0%, #777ab3 100%); */
+  font-family: 'Poppins', sans-serif;
+  /* padding: 1rem; */
+  box-sizing: border-box;
+}
+
+.auth-form-container {
+  background-color: white;
+  padding: 2em;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  /* max-width: 480px; */
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.form-group {
+  margin-bottom: 0.75rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: #555;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"] {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus {
+  outline: none;
+  border-color: #676ddf;
+}
+
+.error {
+  color: red;
+  font-size: 0.75rem;
+}
+
+.input-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.form-group-name {
+  flex: 1;
+  display: block;
+  margin-bottom: 0.25rem;
+  color: #555;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-top: 0.25rem;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #333;
+  position: relative;
+  padding-left: 24px;
+  font-size: 0.875rem;
+}
+
+.radio-label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.radio-custom {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 16px;
+  width: 16px;
+  background-color: #fff;
+  border: 2px solid #676ddf;
+  border-radius: 50%;
+}
+
+.radio-label:hover input ~ .radio-custom {
+  background-color: #f0f0f0;
+}
+
+.radio-label input:checked ~ .radio-custom:after {
+  content: '';
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #676ddf;
+}
+
+.submit-btn {
+  background-color: #676ddf;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.submit-btn:hover {
+  background-color: #4c5cb0;
+}
+
+p {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  a {
+    color: #007BFF;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
