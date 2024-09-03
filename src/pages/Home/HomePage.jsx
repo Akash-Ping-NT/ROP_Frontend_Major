@@ -1,7 +1,6 @@
 import React, { useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-// import NavBar from '../../components/NavBar/NavBar';
 import RestaurantCard from '../../components/CardComponent/RestaurantCard';
 import './HomePage.css';
 import banner from '../../assets/banner.jpg'
@@ -28,11 +27,7 @@ const HomePage = () => {
 
     return (
         <div className="home-container">
-            {/* <header className="home-header">
-                <h1>Welcome to Your Food Ordering App</h1>
-                <p>Order food from your favorite restaurants with ease!</p>
-            </header> */}
-
+        
             <section className="home-hero">
                 <img 
                     src={banner} 

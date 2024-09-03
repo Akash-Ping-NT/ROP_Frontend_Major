@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams
-import './MenuItemModal.css'; // Import CSS for modal styling
+import { useParams } from 'react-router-dom';
+import './MenuItemModal.css';
 
 const MenuItemModal = ({ isOpen, onClose, onSubmit, menuItem, setMenuItem, handleFileChange }) => {
-    const { id: restaurantId } = useParams(); // Get restaurantId from URL parameters
+    const { id: restaurantId } = useParams();
     const [categories, setCategories] = useState([]);
 
-    // Fetch categories based on the provided restaurantId
     useEffect(() => {
         if (restaurantId) {
             fetch(`http://localhost:8081/api/categories/getAllCategory/${restaurantId}`)
@@ -18,7 +17,6 @@ const MenuItemModal = ({ isOpen, onClose, onSubmit, menuItem, setMenuItem, handl
 
     if (!isOpen) return null;
 
-    // Handle change for category dropdown
     const handleCategoryChange = (e) => {
         const selectedCategoryId = e.target.value;
         setMenuItem(prevState => ({

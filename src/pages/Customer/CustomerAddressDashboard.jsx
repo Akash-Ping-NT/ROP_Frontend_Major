@@ -1,4 +1,3 @@
-// src/components/CustomerDashboard.js
 import React from 'react';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import UserAddress from '../../components/Address/UserAddress';

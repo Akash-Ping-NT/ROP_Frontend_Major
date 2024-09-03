@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './RestaurantEditPopup.css'; // Create and import CSS for this component
+import './RestaurantEditPopup.css';
 
 const RestaurantEditPopup = ({ restaurant, isOpen, onClose, onSave }) => {
     const [restaurantName, setRestaurantName] = useState(restaurant.restaurantName || '');

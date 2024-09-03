@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import './RestaurantMenu.css'; // Import CSS for styling
+import './RestaurantMenu.css';
 import axios from 'axios';
 import MenuItemModal from './MenuItemModal';
 import { useParams } from 'react-router-dom';
 
 const RestaurantMenu = ({ restaurant }) => {
     const [menuItems, setMenuItems] = useState([]);
-    const { id: restaurantId } = useParams(); // Get restaurantId from URL parameters
+    const { id: restaurantId } = useParams();
     const [newMenuItem, setNewMenuItem] = useState({
         restaurantName: '',
         categoryName: '',
@@ -17,8 +17,8 @@ const RestaurantMenu = ({ restaurant }) => {
         imageUrl: null,
     });
     const userId = localStorage.getItem('userId');
-    const [editingMenuItem, setEditingMenuItem] = useState(null); // Track the menu item being edited
-    const [isModalOpen, setIsModalOpen] = useState(false); // Manage modal visibility
+    const [editingMenuItem, setEditingMenuItem] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchMenuItems = async () => {

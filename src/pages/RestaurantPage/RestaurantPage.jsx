@@ -13,11 +13,9 @@ const RestaurantPage = () => {
     useEffect(() => {
         const fetchRestaurantAndMenu = async () => {
             try {
-                // Fetch restaurant details
                 const restaurantResponse = await axios.get(`http://localhost:8081/api/restaurants/getRestaurant/${id}`);
                 setRestaurant(restaurantResponse.data);
 
-                // Fetch menu items
                 const menuResponse = await axios.get(`http://localhost:8081/api/menuItems/menuItemsByRestaurant/${id}`);
                 setMenuItems(menuResponse.data);
 

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
 import Popup from '../../components/PopUp/PopUp';
-import { login } from '../../utils/api'; // Ensure correct import path
+import { login } from '../../utils/api';
 import './SignIn.css';
 
 const SignIn = ({ onSwitchToSignUp, onClose }) => {

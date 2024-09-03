@@ -28,9 +28,7 @@ const SignUp = ({ onSwitchToSignIn, onClose }) => {
       if (!email) newErrors.email = 'Email is required';
       else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Email is invalid';
       else if (!email.endsWith('@nucleusteq.com')) newErrors.email = 'Email must end with @nucleusteq.com';
-      // if (password !== confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
-
-        // Contact number validation
+     
         if (!contactNumber) {
           newErrors.contactNumber = 'Contact number is required';
       } else if (!/^\d{10}$/.test(contactNumber)) {
@@ -39,14 +37,14 @@ const SignUp = ({ onSwitchToSignIn, onClose }) => {
           newErrors.contactNumber = 'Contact number must start with 986';
       }
 
-      // Password validation
+ 
       if (!password) {
         newErrors.password = 'Password is required';
     } else if (password.length < 8) {
         newErrors.password = 'Password must be at least 8 characters long';
     }
 
-    // Confirm password validation
+
     if (password !== confirmPassword) {
         newErrors.confirmPassword = 'Passwords do not match';
     }

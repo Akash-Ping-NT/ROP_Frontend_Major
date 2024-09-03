@@ -11,7 +11,6 @@ const RestaurantProfile = () => {
     role: 'owner',
     email: 'asjhdkj@gmial.com',
     contactNumber: '9876634212',
-    // walletBalance: '1823',
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -60,10 +59,6 @@ const RestaurantProfile = () => {
           <label>Contact Number</label>
           <p>{userProfile?.contactNumber}</p>
         </div>
-        {/* <div className="profile-info">
-          <label>Wallet Balance</label>
-          <p className="balance">₹{userProfile?.walletBalance}</p>
-        </div> */}
       </div>
       <div className="profile-footer">
         <button onClick={() => navigate('/update-profile')} className="edit-button">

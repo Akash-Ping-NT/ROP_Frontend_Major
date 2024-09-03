@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './CreateRestaurant.css'; // Import the CSS file
+import './CreateRestaurant.css';
 
 const CreateRestaurantForm = () => {
     const [restaurantName, setRestaurantName] = useState('');
