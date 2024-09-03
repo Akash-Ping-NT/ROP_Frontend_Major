@@ -1,0 +1,123 @@
+.profile-card {
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    max-width: 90%;
+    margin: auto;
+  }
+  
+  .profile-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .profile-avatar {
+    width: 120px;
+    height: 120px;
+    background-color: #6f76f0;
+    color: #ffffff;
+    font-size: 2.5rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+  }
+  
+  .profile-header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #333;
+  }
+  
+  .profile-header .role {
+    color: #777;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  .profile-body {
+    margin-bottom: 2rem;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+  }
+  
+  .profile-info {
+    margin-bottom: 1.5rem;
+    width: 50%;
+  }
+  
+  .profile-info label {
+    display: block;
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 0.25rem;
+  }
+  
+  .profile-info p {
+    font-size: 1.1rem;
+    color: #333;
+    margin: 0;
+    padding: 0.75rem;
+    background-color: #e9ecef;
+    border-radius: 6px;
+  }
+  
+  .profile-info .balance {
+    font-weight: bold;
+    color: #28a745;
+  }
+  
+  .profile-footer {
+    text-align: center;
+  }
+  
+  .edit-button {
+    background-color:#6f76f0;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .edit-button:hover {
+    background-color:  #5e65e5;
+  }
+  
+  .loading, .error {
+    text-align: center;
+    /* font-size: 1.1rem; */
+    color: #666;
+  }
+  
+  .error {
+    color: #676ddf;
+  }
+  
+  @media (max-width: 480px) {
+    .profile-card {
+      padding: 1.5rem;
+    }
+  
+    .profile-avatar {
+      width: 90px;
+      height: 90px;
+      font-size: 2rem;
+    }
+  
+    .profile-header h1 {
+      font-size: 1.4rem;
+    }
+  
+    .edit-button {
+      width: 100%;
+    }
+  }
+  

@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "name": "The Spice House",
+        "status": "Open"
+    },
+    {
+        "id": 2,
+        "name": "Pizza Palace",
+        "status": "Closed"
+    },
+    {
+        "id": 3,
+        "name": "Sushi World",
+        "status": "Open"
+    },
+    {
+        "id": 4,
+        "name": "Burger Haven",
+        "status": "Closed"
+    },
+    {
+        "id": 1,
+        "name": "The Spice House",
+        "status": "Open"
+    },
+    {
+        "id": 2,
+        "name": "Pizza Palace",
+        "status": "Closed"
+    },
+    {
+        "id": 3,
+        "name": "Sushi World",
+        "status": "Open"
+    },
+    {
+        "id": 4,
+        "name": "Burger Haven",
+        "status": "Closed"
+    }
+]

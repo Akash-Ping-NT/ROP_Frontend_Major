@@ -1,0 +1,90 @@
+/* Container for the form */
+.create-restaurant-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Heading */
+.create-restaurant-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 30px;
+  color: #333;
+}
+
+/* Error message */
+.create-restaurant-container .error {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Form element styling */
+.create-restaurant-container form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+/* Label and input container */
+.create-restaurant-container form div {
+  margin-bottom: 15px;
+  margin-top: 10px;
+  display: flex ;
+  width: 80%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Input labels */
+.create-restaurant-container form label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #555;
+}
+
+/* Input fields */
+.create-restaurant-container form input[type="text"],
+.create-restaurant-container form input[type="file"] {
+  width: 60%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.2s;
+}
+
+/* Input hover and focus effects */
+.create-restaurant-container form input[type="text"]:focus,
+.create-restaurant-container form input[type="file"]:focus {
+  border-color: #676DDF;
+  outline: none;
+}
+
+/* Submit button */
+.create-restaurant-container button[type="submit"] {
+  padding: 10px 15px;
+  background-color: #676DDF;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Button hover effect */
+.create-restaurant-container button[type="submit"]:hover {
+  background-color: #4e55d4;
+}

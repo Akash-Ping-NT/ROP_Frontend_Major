@@ -1,0 +1,119 @@
+.category-manager {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.category-manager h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.add-category {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.add-category input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.add-category button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.category-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.category-list li {
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-category {
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-category input {
+    padding: 8px;
+    margin-right: 10px;
+    width: 200px;
+}
+
+
+.edit-category button {
+    padding: 8px 12px;
+    margin-right: 5px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Styling for the category info container */
+.category-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+}
+
+/* Styling for the category name */
+.category-info span {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Styling for the action buttons container */
+.category-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Styling for the Edit and Delete buttons */
+.category-actions button {
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff; /* Default blue color for Edit button */
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.category-actions button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Specific styling for the Delete button */
+.category-actions button:nth-child(2) {
+    background-color: #dc3545; /* Red color for Delete button */
+}
+
+.category-actions button:nth-child(2):hover {
+    background-color: #c82333; /* Darker red on hover */
+}
