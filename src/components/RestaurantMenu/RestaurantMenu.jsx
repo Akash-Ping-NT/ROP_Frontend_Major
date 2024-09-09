@@ -179,7 +179,7 @@ const RestaurantMenu = ({ restaurant }) => {
                             <img src={`data:image/jpeg;base64,${item.imageUrl}`} alt={item.foodName} />
                         </div>
                         <div className="menu-info">
-                            <span>{index + 1}. {item.foodName} ({item.categoryName}) - ${item?.price?.toFixed(2)}</span>
+                            <span>{index + 1}. {item.foodName} ({item.categoryName}) - ₹ {item?.price?.toFixed(2)}</span>
                             <span>{item.isAvailable ? 'Available' : 'Not Available'}</span>
                         </div>
                             </div>

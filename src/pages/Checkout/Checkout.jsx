@@ -106,14 +106,14 @@ const Checkout = () => {
                 <h3>Your Order</h3>
                 {cart.map(item => (
                     <div key={item.foodItemId} className="cart-item">
-                        <p>{item.foodItemName} - {item.quantity} x ${item.price} = ${item.totalPrice.toFixed(2)}</p>
+                        <p>{item.foodItemName} - {item.quantity} x ₹ {item.price} = ₹ {item.totalPrice.toFixed(2)}</p>
                     </div>
                 ))}
             </div>
 
             {/* Total Price Section */}
             <div className="total-price">
-                <h3>Total: ${totalPrice.toFixed(2)}</h3>
+                <h3>Total: ₹ {totalPrice.toFixed(2)}</h3>
             </div>
 
             {/* Place Order Button */}

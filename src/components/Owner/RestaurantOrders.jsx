@@ -37,14 +37,14 @@ const RestaurantOrders = ({ orderData }) => {
             <p><strong>Customer Name:</strong> {orderData.firstName} {orderData.lastName}</p>
             <p><strong>Delivery Address:</strong> {orderData.deliveryAddress}</p>
             <p><strong>Order Date:</strong> {new Date(orderData.orderDate).toLocaleString()}</p>
-            <p><strong>Total Amount:</strong> ${orderData.totalAmount.toFixed(2)}</p>
+            <p><strong>Total Amount:</strong> ₹ {orderData.totalAmount.toFixed(2)}</p>
             </div>
             <div className="order-items">
             <h3>Order Items</h3>
             <ul>
                 {orderData.orderItems.map((item) => (
                     <li key={item.foodItemId}>
-                        {item.foodItemName} - {item.quantity} x ${item.price} = ${item.totalPrice.toFixed(2)}
+                        {item.foodItemName} - {item.quantity} x ₹ {item.price} = ₹ {item.totalPrice.toFixed(2)}
                     </li>
                 ))}
             </ul>

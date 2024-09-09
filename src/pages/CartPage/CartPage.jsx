@@ -117,7 +117,7 @@ const CartItemPage = () => {
                         <img src={`data:image/jpeg;base64,${item.foodItemImage}`} alt={item.foodItemName} className="cart-item-image" />
                         <div className="cart-item-details">
                             <h3>{item.foodItemName}</h3>
-                            <p>Price: ${item.price}</p>
+                            <p>Price: ₹ {item.price}</p>
                             <div className="cart-item-quantity">
                                 <button 
                                     onClick={() => handleDecreaseQuantity(item.cartId, item.quantity)}
@@ -146,7 +146,7 @@ const CartItemPage = () => {
             <div className="cart-summary-section">
                 <div className="cart-summary">
                     <h2>Price Details</h2>
-                    <p>Total Price: ${totalPrice.toFixed(2)}</p>
+                    <p>Total Price: ₹ {totalPrice.toFixed(2)}</p>
                     {error && <p className="error-message">{error}</p>}
                     <button onClick={handleCheckout} className="checkout-button">Checkout</button>
                 </div>
