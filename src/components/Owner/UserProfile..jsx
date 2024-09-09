@@ -66,9 +66,9 @@ const UserProfile = () => {
         </div>
       </div>
       <div className="profile-footer">
-        <button onClick={() => navigate('/update-profile')} className="edit-button">
+        {/* <button onClick={() => navigate('/update-profile')} className="edit-button">
           Edit Profile
-        </button>
+        </button> */}
       </div>
     </div>
   );

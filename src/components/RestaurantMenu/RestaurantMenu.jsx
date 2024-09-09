@@ -6,7 +6,6 @@ import { useParams } from 'react-router-dom';
 
 const RestaurantMenu = ({ restaurant }) => {
     const [menuItems, setMenuItems] = useState([]);
-    const { id: restaurantId } = useParams();
     const [newMenuItem, setNewMenuItem] = useState({
         restaurantName: '',
         categoryName: '',
@@ -21,20 +20,21 @@ const RestaurantMenu = ({ restaurant }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        const fetchMenuItems = async () => {
-            try {
-                const response = await fetch(`http://localhost:8081/api/menuItems/menuItemsByRestaurant/${restaurant.id}`);
-                const data = await response.json();
-                setMenuItems(data);
-            } catch (error) {
-                console.error('Error fetching menu items:', error);
-            }
-        };
 
-        if (restaurant) {
+        if (restaurant !== null && restaurant?.id) {
             fetchMenuItems();
         }
     }, [restaurant]);
+
+    const fetchMenuItems = async () => {
+        try {
+            const response = await fetch(`http://localhost:8081/api/menuItems/menuItemsByRestaurant/${restaurant.id}`);
+            const data = await response.json();
+            setMenuItems(data);
+        } catch (error) {
+            console.error('Error fetching menu items:', error);
+        }
+    };
 
     const handleFileChange = (e) => {
         setNewMenuItem({ ...newMenuItem, imageUrl: e.target.files[0] });
@@ -69,8 +69,8 @@ const RestaurantMenu = ({ restaurant }) => {
         try {
             let response;
             if (editingMenuItem) {
-                formData.append('menuItemupdateRequestDTO', new Blob([JSON.stringify({
-                    restaurantOwnerId:  userId,
+                formData.append('menuItemupdateInDTO', new Blob([JSON.stringify({
+                    restaurantId:  restaurant.id,
                     categoryId:  newMenuItem.categoryId,
                     name:  newMenuItem.foodName,
                     description:  newMenuItem.description,
@@ -87,8 +87,8 @@ const RestaurantMenu = ({ restaurant }) => {
                     }
                 });
             } else {
-                formData.append('createMenuItemRequestDTO', new Blob([JSON.stringify({
-                    restaurantOwnerId:  userId,
+                formData.append('menuItemInDTO', new Blob([JSON.stringify({
+                    restaurantId:  restaurant.id,
                     categoryId:  newMenuItem.categoryId,
                     foodName:  newMenuItem.foodName,
                     description:  newMenuItem.description,
@@ -108,11 +108,7 @@ const RestaurantMenu = ({ restaurant }) => {
 
             if (response.status === 201 || response.status === 200) {
                 const updatedMenuItem = response.data;
-                if (editingMenuItem) {
-                    setMenuItems(menuItems.map((item) => (item.id === editingMenuItem.id ? updatedMenuItem : item)));
-                } else {
-                    setMenuItems([...menuItems, updatedMenuItem]);
-                }
+                fetchMenuItems();
                 closeModal();
             } else {
                 console.error('Failed to save menu item');
@@ -125,6 +121,7 @@ const RestaurantMenu = ({ restaurant }) => {
     const startEditing = (menuItem) => {
         setEditingMenuItem(menuItem);
         setNewMenuItem({
+            id: menuItem.id,
             categoryName: menuItem.categoryName,
             foodName: menuItem.foodName,
             description: menuItem.description,
@@ -142,7 +139,7 @@ const RestaurantMenu = ({ restaurant }) => {
             });
 
             if (response.status === 200) {
-                setMenuItems(menuItems.filter((item) => item.id !== menuItemId));
+                fetchMenuItems();
             } else {
                 console.error('Failed to delete menu item');
             }
@@ -158,7 +155,7 @@ const RestaurantMenu = ({ restaurant }) => {
             });
 
             if (response.status === 200) {
-                setMenuItems(menuItems.map((item) => (item.id === menuItem.id ? {...item, isAvailable: !item.isAvailable} : item)));
+                fetchMenuItems();
             } else {
                 console.error('Failed to toggle availability');
             }
@@ -182,7 +179,7 @@ const RestaurantMenu = ({ restaurant }) => {
                             <img src={`data:image/jpeg;base64,${item.imageUrl}`} alt={item.foodName} />
                         </div>
                         <div className="menu-info">
-                            <span>{index + 1}. {item.foodName} ({item.categoryName}) - ${item.price.toFixed(2)}</span>
+                            <span>{index + 1}. {item.foodName} ({item.categoryName}) - ${item?.price?.toFixed(2)}</span>
                             <span>{item.isAvailable ? 'Available' : 'Not Available'}</span>
                         </div>
                             </div>
@@ -205,7 +202,7 @@ const RestaurantMenu = ({ restaurant }) => {
                 setMenuItem={setNewMenuItem}
                 handleChange={handleChange}
                 handleFileChange={handleFileChange}
-                restaurantId={restaurantId}
+                restaurantId={restaurant?.id}
             />
         </div>
     );

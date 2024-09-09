@@ -1,36 +1,34 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import './Sidebar.css';
 
-
 const Sidebar = ({restaurantId}) => {
+  const location = useLocation();
   return (
     <div className="sidebar">
       <h2>Menu</h2>
       <ul>
         <li>
-          <NavLink to="/restaurant" activeClassName="active-link">
+          <NavLink to="/admin/restaurants" >&larr; Back</NavLink>
+        </li>
+        <li>
+          <NavLink to={`/admin/restaurants/${restaurantId}/dashboard`} className={location.pathname === `/admin/restaurants/${restaurantId}/dashboard` ? 'active-link' : undefined}>
             Dashboard
           </NavLink>
         </li>
         <li>
-          <NavLink to="/restaurant/orders" activeClassName="active-link">
-            Orders
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to={`/restaurant/${restaurantId}/categories`} activeClassName="active-link">
+          <NavLink to={`/admin/restaurants/${restaurantId}/categories`} className={location.pathname === `/admin/restaurants/${restaurantId}/categories` ? 'active-link' : undefined}>
             Categories
           </NavLink>
         </li>
         <li>
-          <NavLink to={`/restaurant/${restaurantId}/menu`} activeClassName="active-link">
-            Menu
+          <NavLink to={`/admin/restaurants/${restaurantId}/orders`} className={location.pathname === `/admin/restaurants/${restaurantId}/orders` ? 'active-link' : undefined}>
+            Orders
           </NavLink>
         </li>
         <li>
-          <NavLink to={`/restaurant/restaurantOwnerProfile`} activeClassName="active-link">
-            Profile
+          <NavLink to={`/admin/restaurants/${restaurantId}/menu`} className={location.pathname === `/admin/restaurants/${restaurantId}/menu` ? 'active-link' : undefined}>
+            Menu
           </NavLink>
         </li>
       </ul>
@@ -38,5 +36,5 @@ const Sidebar = ({restaurantId}) => {
   );
 };
 
-
 export default Sidebar;
+

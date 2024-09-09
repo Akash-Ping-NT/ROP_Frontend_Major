@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './useraddress.css';
 import { createAddress, deleteAddress, getAllAddress, updateAddress } from '../../utils/api';
+import { states } from '../../constants/states';
 
 const UserAddress = () => {
   const [addresses, setAddresses] = useState([
@@ -52,19 +53,14 @@ const UserAddress = () => {
   const handleSaveAddress = () => {
     if (isEditing) {
       updateAddress(currentAddressId, addressForm).then(response => {
-        setAddresses(addresses.map(address => 
-          address.addressId === currentAddressId ? { ...address, ...{...addressForm,street:addressForm.streetAddress} } : address
-        ));
+        getAllAddress(userId).then(addresses => setAddresses(addresses));
       })
-      setAddresses(addresses.map(address => 
-        address.id === currentAddressId ? { ...address, ...addressForm } : address
-      ));
+      getAllAddress(userId).then(addresses => setAddresses(addresses));
     } else {
       const newAddress = { ...addressForm, userId };
 
       createAddress(newAddress).then(response => {
-          setAddresses([{...response},...addresses, ]);
-      })
+        getAllAddress(userId).then(addresses => setAddresses(addresses));      })
     }
     setShowPopup(false);
     setAddressForm({ city: '', country: '', postalCode: '', state: '', streetAddress: '' });
@@ -77,8 +73,8 @@ const UserAddress = () => {
 
   const handleDeleteAddress = (id) => {
     deleteAddress(id).then(() => {
-      setAddresses(addresses.filter(address => address.addressId !== id));
-    }).catch(error => {
+      getAllAddress(userId).then(addresses => setAddresses(addresses));
+      }).catch(error => {
       console.error('Error deleting address:', error);
     })
   };
@@ -140,13 +136,18 @@ const UserAddress = () => {
               value={addressForm.city}
               onChange={handleInputChange}
             />
-            <input
-              type="text"
+            <select
               name="state"
-              placeholder="State"
               value={addressForm.state}
               onChange={handleInputChange}
-            />
+            >
+              <option value="">Select State</option>
+              {states.map((state) => (
+                <option key={state} value={state}>
+                  {state}
+                </option>
+              ))}
+            </select>
             <input
               type="text"
               name="postalCode"

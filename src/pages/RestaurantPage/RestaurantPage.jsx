@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './RestaurantPage.css';
+import MenuItemCard from '../../components/CardComponent/MenuItemCard';
 
 const RestaurantPage = () => {
     const { id } = useParams();
@@ -9,7 +10,8 @@ const RestaurantPage = () => {
     const [menuItems, setMenuItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const [cart, setCart] = useState([]);
+    const userId = localStorage.getItem('userId');
     useEffect(() => {
         const fetchRestaurantAndMenu = async () => {
             try {
@@ -28,7 +30,45 @@ const RestaurantPage = () => {
         };
 
         fetchRestaurantAndMenu();
+        if(userId) {
+            fetchCartData();
+        }
     }, [id]);
+
+
+    const fetchCartData = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8083/api/cart/${userId}`);
+            setCart(response.data);
+            console.log("Cart data fetched successfully", response.data);
+        } catch (error) {
+            console.error("Error fetching cart data", error);
+            setError("Error fetching cart data");
+        }
+    };
+
+
+    const handleAddToCart = async (foodItemId) => {
+        try {
+            if(!userId) {   
+                alert('Please login to add items to cart');
+                return;
+            }
+            const cartData = {
+                userId: parseInt(userId),
+                restaurantId: parseInt(id),  // The restaurant ID from the route params
+                foodItemId: foodItemId,
+                quantity: 1  // You can adjust this or add logic to change the quantity
+            };
+
+            const response = await axios.post('http://localhost:8083/api/cart/add', cartData);
+            fetchCartData()
+            alert('Item added to cart!');
+        } catch (error) {
+            console.error('Error adding item to cart', error);
+            alert('Error adding item to cart');
+        }
+    };
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
@@ -45,7 +85,11 @@ const RestaurantPage = () => {
                     />
                     <div className="restaurant-banner-content">
                         <h1 className="restaurant-name">{restaurant.restaurantName}</h1>
+                        <p className='restaurant-description'>{restaurant.description}</p>
                         <p className="restaurant-hours">Opening Hours: {restaurant.openingHours}</p>
+                        <p className='restaurant-address'>{restaurant.address}</p>
+                        <p className='restaurant-contact'>{restaurant.contactNo}</p>
+                        
                         {/* <p className={`restaurant-status ${restaurant.open ? 'open' : 'closed'}`}>
                             {restaurant.open ? 'Open' : 'Closed'}
                         </p> */}
@@ -58,17 +102,8 @@ const RestaurantPage = () => {
                 <h2>Menu Items</h2>
             </header>
             <div className="menu-items-container">
-                {menuItems.map(item => (
-                    <div key={item.id} className="menu-item-card">
-                        <img src={`data:image/jpeg;base64,${item.imageUrl}`} alt={item.foodName} className="menu-item-image"/>
-                        <div className="menu-item-details">
-                            <h2 className="menu-item-name">{item.foodName}</h2>
-                            <p className="menu-item-description">{item.description}</p>
-                            <span className={`menu-item-status ${item.isAvailable ? 'available' : 'not-available'}`}>
-                                {item.isAvailable ? 'Available' : 'Not Available'}
-                            </span>
-                        </div>
-                    </div>
+                {menuItems?.map(item => (
+                   <MenuItemCard key={item.id} menuItem={item} cartItems={cart?.cartItems} onAddToCart={handleAddToCart} />
                 ))}
             </div>
         </div>

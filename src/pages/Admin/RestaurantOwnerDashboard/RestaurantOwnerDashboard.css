@@ -1,0 +1,167 @@
+/* Container for the restaurant admin page */
+.restaurant-admin-container {
+  padding: 20px;
+  width: 80%;
+  /* margin-top: 70px; */
+  margin: 75px auto;
+  background-color: #f4f7fc;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Header for the restaurant admin page */
+.restaurant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+/* Add restaurant button */
+.add-restaurant-btn {
+  padding: 12px 25px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-restaurant-btn:hover {
+  background-color: #218838;
+}
+
+/* Restaurant cards container */
+.restaurant-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Individual restaurant card */
+.restaurant-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 20px;
+  width: 250px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.restaurant-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Restaurant card image */
+.restaurant-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+/* Popup overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* Popup content */
+.popup {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.popup h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Form inputs inside the popup */
+.popup form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.popup form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Form buttons inside the popup */
+.popup form button {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.popup form .submit {
+  background-color: #007bff;
+  margin-right: 10px;
+}
+
+.popup form .submit:hover {
+  background-color: #0056b3;
+}
+
+.popup form button[type="button"] {
+  background-color: #dc3545;
+}
+
+.popup form button[type="button"]:hover {
+  background-color: #c82333;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .restaurant-cards {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .popup {
+      width: 90%;
+      padding: 20px;
+  }
+
+  .restaurant-card {
+      width: 100%;
+      max-width: 350px;
+  }
+
+  .add-restaurant-btn {
+      width: 100%;
+      text-align: center;
+  }
+}

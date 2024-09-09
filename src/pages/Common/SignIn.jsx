@@ -95,7 +95,7 @@ const SignIn = ({ onSwitchToSignUp, onClose }) => {
     setPopUp({ ...popUp, visible: false });
     if (popUp.type === 'success') {
       const role = localStorage.getItem('role');
-      const redirectPath = role === 'CUSTOMER' ? '/dashboard' : '/restaurant';
+      const redirectPath = role === 'CUSTOMER' ? '/dashboard' : '/admin/restaurants';
       navigate(redirectPath);
       onClose();
     }

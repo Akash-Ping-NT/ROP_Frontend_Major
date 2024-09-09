@@ -36,10 +36,10 @@ const HomePage = () => {
                 />
                 <div className="hero-content">
                     <h2 className='hero-title'>Find the best restaurants near you</h2>
-                    <a href ="#restaurants" className="hero-button">Explore Restaurants</a>
+                    <a href ="#restaurants-breaker" className="hero-button">Explore Restaurants</a>
                 </div>
             </section>
-
+            <section id='restaurants-breaker'></section>
             <section className="home-restaurants" id='restaurants'>
                 <h2 className='home-restaurants-title'>Featured Restaurants</h2>
                 <div className="restaurant-cards">
@@ -49,6 +49,8 @@ const HomePage = () => {
                             id={restaurant.id} 
                             name={restaurant.restaurantName} 
                             status={restaurant.open ? 'Open' : 'Closed'} 
+                            openingHours={restaurant.openingHours}
+                            description={restaurant.description}
                             imageUrl={restaurant.imageUrl}
                         />
                     ))}

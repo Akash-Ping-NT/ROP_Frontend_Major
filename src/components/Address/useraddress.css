@@ -47,7 +47,7 @@
     border-radius: 2px;
   }
   
-  .popup input[type="text"]{
+  .popup input[type="text"],select{
     margin-bottom: 1rem;
   }
   

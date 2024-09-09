@@ -15,7 +15,7 @@
   .profile-avatar {
     width: 120px;
     height: 120px;
-    background-color: #6f76f0;
+    background-color: #F1A661;
     color: #ffffff;
     font-size: 2.5rem;
     font-weight: bold;
@@ -77,7 +77,7 @@
   }
   
   .edit-button {
-    background-color:#6f76f0;
+    background-color:#F1A661;
     color: #ffffff;
     border: none;
     padding: 0.75rem 1.5rem;
@@ -88,7 +88,7 @@
   }
   
   .edit-button:hover {
-    background-color:  #5e65e5;
+    background-color:  #FDEEDC;
   }
   
   .loading, .error {
@@ -98,7 +98,7 @@
   }
   
   .error {
-    color: #676ddf;
+    color: #E38B29;
   }
   
   @media (max-width: 480px) {

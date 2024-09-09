@@ -5,6 +5,7 @@ import './MenuItemModal.css';
 const MenuItemModal = ({ isOpen, onClose, onSubmit, menuItem, setMenuItem, handleFileChange }) => {
     const { id: restaurantId } = useParams();
     const [categories, setCategories] = useState([]);
+    console.log(menuItem);
 
     useEffect(() => {
         if (restaurantId) {

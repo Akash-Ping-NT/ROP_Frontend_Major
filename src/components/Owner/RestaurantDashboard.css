@@ -95,3 +95,10 @@
 .restaurant-dashboard-details strong {
     color: #333;
 }
+
+
+.restaurant-dashboard-edit {
+    overflow-clip-margin: content-box;
+    overflow: clip;   
+
+}

@@ -9,20 +9,23 @@ const RestaurantCategories = ({ restaurant }) => {
 
     useEffect(() => {
         // Fetch existing categories from the backend for the specific restaurantId
-        const fetchCategories = async () => {
-            try {
-                const response = await fetch(`http://localhost:8081/api/categories/getAllCategory/${restaurant.id}`);
-                const data = await response.json();
-                setCategories(data);
-            } catch (error) {
-                console.error('Error fetching categories:', error);
-            }
-        };
+        
 
-        if (restaurant) {
+        if (restaurant && restaurant?.id) {
+            console.log(restaurant)
             fetchCategories();
         }
     }, [restaurant]);
+
+    const fetchCategories = async () => {
+        try {
+            const response = await fetch(`http://localhost:8081/api/categories/getAllCategory/${restaurant.id}`);
+            const data = await response.json();
+            setCategories(data);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        }
+    };
 
     const addCategory = async () => {
         if (newCategory.trim() === '') return;
@@ -38,7 +41,7 @@ const RestaurantCategories = ({ restaurant }) => {
 
             if (response.status === 201) {
                 const addedCategory = await response.json();
-                setCategories([...categories, addedCategory]);
+                fetchCategories();
                 setNewCategory(''); // Clear the input field after adding
             } else {
                 console.error('Failed to add category');
@@ -72,7 +75,7 @@ const RestaurantCategories = ({ restaurant }) => {
 
             if (response.status === 200) {
                 const updatedCategory = await response.json();
-                setCategories(categories.map((cat) => (cat.id === category.id ? updatedCategory : cat)));
+                fetchCategories();
                 cancelEditing();
             } else {
                 console.error('Failed to update category');
@@ -89,7 +92,7 @@ const RestaurantCategories = ({ restaurant }) => {
             });
 
             if (response.status === 200) {
-                setCategories(categories.filter((category) => category.id !== categoryId));
+                fetchCategories();
             } else {
                 console.error('Failed to delete category');
             }
@@ -111,7 +114,7 @@ const RestaurantCategories = ({ restaurant }) => {
                 <button onClick={addCategory}>Add Category</button>
             </div>
             <ul className="category-list">
-                {categories.map((category, index) => (
+                {categories?.map((category, index) => (
                     <li key={category.id} className="category-item">
                         {editingCategory?.id === category.id ? (
                             <div className="edit-category">

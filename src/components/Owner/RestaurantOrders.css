@@ -1,0 +1,115 @@
+.order-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.order-card h2 {
+    margin-bottom: 10px;
+}
+
+.order-card p {
+    margin: 5px 0;
+}
+
+
+.order-items{
+    min-width: 30%;
+}
+
+.order-items ul {
+    list-style: none;
+    padding: 0;
+}
+
+.order-items li {
+    margin: 5px 0;
+}
+
+.order-status {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.order-status label {
+    margin-right: 10px;
+}
+
+.order-status select {
+    padding: 5px;
+    margin-right: 20px;
+}
+
+
+/* Container for order status and cancel button */
+.order-status {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+/* Label for the status dropdown */
+.order-status label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Dropdown for status selection */
+.order-status select {
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.order-status select:hover {
+    border-color: #007bff;
+}
+
+.order-status select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* Cancel button */
+.cancel-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cancel-button:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+}
+
+.cancel-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.3);
+}
+
+/* Message for cancelled order */
+.cancelled-message {
+    font-size: 18px;
+    font-weight: bold;
+    color: #dc3545;
+    margin-top: 15px;
+}
