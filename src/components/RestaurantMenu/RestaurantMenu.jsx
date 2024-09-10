@@ -115,6 +115,10 @@ const RestaurantMenu = ({ restaurant }) => {
             }
         } catch (error) {
             console.error('Error saving menu item:', error);
+            const errorMessage = error.response?.data?.message || 'Invalid or Empty Input';
+            alert(errorMessage);
+            // setPopUp({ visible: true, message: errorMessage, type: 'error', redirect: '' });
+
         }
     };
 

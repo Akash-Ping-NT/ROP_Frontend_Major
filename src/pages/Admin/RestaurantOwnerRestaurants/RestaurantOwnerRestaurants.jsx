@@ -13,26 +13,30 @@ const RestaurantOwnerRestaurants = () => {
   const params = useParams();
   const { id } = params;
 
-  useEffect(() => {
-    const fetchRestaurantData = async () => {
-        try {
-            getRestaurantByRestaurantId(id).then((data) => {
-                setRestaurant(data);
-            }).catch((error) => {
-                console.error('Error fetching restaurant data:', error);
-            })
-        } catch (error) {
+  const fetchRestaurantData = async () => {
+    try {
+        getRestaurantByRestaurantId(id).then((data) => {
+            setRestaurant(data);
+        }).catch((error) => {
             console.error('Error fetching restaurant data:', error);
-        }
-    };
+        })
+    } catch (error) {
+        console.error('Error fetching restaurant data:', error);
+    }
+};
+
+  useEffect(() => {
     fetchRestaurantData();
-}, [userId]);
+}, [userId, id]);
 
   return (
     <div className="dashboard-container">
       <RestaurantOwnerDashboardSidebar restaurantId={restaurant.id} />
       <div className="dashboard-content">
-        <RestaurantDashboard restaurant={restaurant}/>
+        <RestaurantDashboard 
+        restaurant={restaurant}
+        setRestaurant={setRestaurant} 
+        refreshData={fetchRestaurantData} />
       </div>
     </div>
   );

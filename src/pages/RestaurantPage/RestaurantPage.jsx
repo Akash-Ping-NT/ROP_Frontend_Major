@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './RestaurantPage.css';
 import MenuItemCard from '../../components/CardComponent/MenuItemCard';
+import CategoryDropdowns from '../../components/DropdownCategory/CategoryDropdowns';
+
 
 const RestaurantPage = () => {
     const { id } = useParams();
@@ -12,6 +14,7 @@ const RestaurantPage = () => {
     const [error, setError] = useState(null);
     const [cart, setCart] = useState([]);
     const userId = localStorage.getItem('userId');
+
     useEffect(() => {
         const fetchRestaurantAndMenu = async () => {
             try {
@@ -66,8 +69,12 @@ const RestaurantPage = () => {
             alert('Item added to cart!');
         } catch (error) {
             console.error('Error adding item to cart', error);
-            alert('Error adding item to cart');
+            alert(`Error placing order: ${error.response.data.message}`);
         }
+    };
+
+    const handleCategorySelect = (fetchedMenuItems) => {
+        setMenuItems(fetchedMenuItems);
     };
 
     if (loading) return <p>Loading...</p>;
@@ -97,10 +104,13 @@ const RestaurantPage = () => {
                 </div>
             )}
 
-            {/* Menu Items Section */}
-            <header className="restaurant-header">
+          {/* Menu Items Section */}
+          <header className="restaurant-header-page">
                 <h2>Menu Items</h2>
+                {/* Category Dropdown aligned to the right */}
+                <CategoryDropdowns restaurantId={id} onCategorySelect={handleCategorySelect} />
             </header>
+
             <div className="menu-items-container">
                 {menuItems?.map(item => (
                    <MenuItemCard key={item.id} menuItem={item} cartItems={cart?.cartItems} onAddToCart={handleAddToCart} />

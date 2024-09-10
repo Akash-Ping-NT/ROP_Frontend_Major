@@ -58,11 +58,11 @@ const Checkout = () => {
             setOrderPlaced(true);
             setTimeout(() => {
                 setOrderPlaced(false);
-                navigate('dashboard/orders');
+                navigate('/dashboard/orders');
             },5000)
         } catch (error) {
-            console.error('Error placing order', error);
-            alert('Error placing order');
+            console.error('Error placing order');
+            alert(`Error placing order: ${error.response.data.message}`);
         }
     };
 
@@ -102,7 +102,7 @@ const Checkout = () => {
             </div>
 
             {/* Cart Items Section */}
-            <div className="cart-items-section">
+            <div className="cart-items-section-next">
                 <h3>Your Order</h3>
                 {cart.map(item => (
                     <div key={item.foodItemId} className="cart-item">

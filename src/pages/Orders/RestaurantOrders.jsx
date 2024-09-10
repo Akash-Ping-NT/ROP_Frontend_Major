@@ -8,16 +8,16 @@ const RestaurantOrders = () => {
     const [orders, setOrders] = useState([]);
     const userId = useSelector(state => state.auth.user.userId); // Replace with dynamic userId if needed
 
-    useEffect(() => {
-        const fetchOrders = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8083/api/orders/user/${userId}`);
-                setOrders(response.data);
-            } catch (error) {
-                console.error('Error fetching user orders:', error);
-            }
-        };
+    const fetchOrders = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8083/api/orders/user/${userId}`);
+            setOrders(response.data);
+        } catch (error) {
+            console.error('Error fetching user orders:', error);
+        }
+    };
 
+    useEffect(() => {
         fetchOrders();
     }, [userId]);
 
@@ -27,11 +27,15 @@ const RestaurantOrders = () => {
             if (response.status === 200) {
                 alert('Order cancelled successfully');
                 setOrders(orders.map(order => order.orderId === orderId ? { ...order, status: 'CANCELLED' } : order));
+                fetchOrders();
             } else {
                 console.error('Failed to cancel order');
             }
         } catch (error) {
             console.error('Error cancelling order:', error);
+            alert(`Error cancelling order: ${error.response.data.message}`);
+            fetchOrders();
+            
         }
     };
 

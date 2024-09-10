@@ -75,7 +75,7 @@ const CartItemPage = () => {
             fetchCartData();
         } catch (error) {
             console.error('Error clearing cart', error);
-            setError('Error clearing cart');
+            setError(error.response.data.message);
         }
     };
     const handleCheckout = async () => {

@@ -15,7 +15,10 @@ const MenuItemCard = ({menuItem, onAddToCart, cartItems}) => {
                         <img src={`data:image/jpeg;base64,${menuItem.imageUrl}`} alt={menuItem.foodName} className="menu-item-image"/>
                         <div className="menu-item-details">
                             <h2 className="menu-item-name">{menuItem.foodName}</h2>
+                            <p className="menu-item-category">{menuItem.categoryName}</p>
                             <p className="menu-item-description">{menuItem.description}</p>
+                            {/* <p className="menu-item-price">{menuItem.price}</p> */}
+                           
                             {/* <span className={`menu-item-status ${menuItem.isAvailable ? 'available' : 'not-available'}`}>
                                 {menuItem.isAvailable ? 'Available' : 'Not Available'}
                             </span> */}

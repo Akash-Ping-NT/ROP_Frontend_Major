@@ -1,7 +1,7 @@
 /* General Layout */
 .checkout-page {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 40px auto;
     padding: 20px;
     background-color: #f7f7f7;
     border-radius: 10px;
@@ -33,7 +33,7 @@ p {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    margin-bottom: 20px;
+    margin-bottom: 8px;
 }
 
 .address-option {
@@ -67,6 +67,15 @@ p {
     /* margin-bottom: 20px; */
 }
 
+.cart-items-section-next {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    /* margin-bottom: 20px; */
+    margin: 0;
+}
+
 .cart-item {
     display: flex;
     justify-content: space-between;
@@ -92,6 +101,7 @@ p {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     text-align: center;
     margin-bottom: 20px;
+    margin-top: 8px;
 }
 
 /* Place Order Button */
@@ -144,6 +154,6 @@ p {
     color: #28a745;
     font-size: 20px;
     font-weight: bold;
-    margin-top: 20px;
+    margin-top: 100px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

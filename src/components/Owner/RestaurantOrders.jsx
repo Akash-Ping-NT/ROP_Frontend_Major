@@ -21,12 +21,14 @@ const RestaurantOrders = ({ orderData }) => {
             try {
                 const response = await axios.put(`http://localhost:8083/api/orders/cancel/${orderId}?userId=${userId}`);
                 if (response.status === 200) {
+                    setStatus("CANCELLED");
                     alert('Order cancelled successfully');
                 } else {
                     console.error('Failed to cancel order');
                 }
             } catch (error) {
                 console.error('Error cancelling order:', error);
+                alert(`Error cancelling order: ${error.response.data.message}`);
             }
     };
 
@@ -49,32 +51,37 @@ const RestaurantOrders = ({ orderData }) => {
                 ))}
             </ul>
 
-                {
-                    status !== 'CANCELLED' &&
-            <div className="order-status">
-                <label htmlFor="status-select">Change Status:  &nbsp;
-                <select
-                    id="status-select"
-                    value={status}
-                    onChange={(e) => handleStatusChange(e.target.value)}
-                    >
-                    <option value="PENDING">Pending</option>
-                    <option value="CONFIRMED">Confirmed</option>
-                    <option value="PREPARING">Preparing</option>
-                    <option value="OUT_FOR_DELIVERY">Out for Delivery</option>
-                    <option value="COMPLETED">Completed</option>
-                </select>
-                </label>
-                <button className="cancel-button" onClick={()=>{handleCancelOrder(orderData.id)}}>
-                    Cancel Order
-                </button>
+            {status !== 'CANCELLED' && status !== 'COMPLETED' && (
+                    <div className="order-status">
+                        <label htmlFor="status-select">Change Status: &nbsp;
+                            <select
+                                id="status-select"
+                                value={status}
+                                onChange={(e) => handleStatusChange(e.target.value)}
+                            >
+                                <option value="PENDING">Pending</option>
+                                <option value="CONFIRMED">Confirmed</option>
+                                <option value="PREPARING">Preparing</option>
+                                <option value="OUT_FOR_DELIVERY">Out for Delivery</option>
+                                <option value="COMPLETED">Completed</option>
+                            </select>
+                        </label>
+
+                        {/* Show the cancel button only if the status is not COMPLETED */}
+                        {status !== 'COMPLETED' && (
+                            <button className="cancel-button" onClick={() => handleCancelOrder(orderData.id)}>
+                                Cancel Order
+                            </button>
+                        )}
+                    </div>
+                )}
+                {status === 'CANCELLED' && (
+                    <p className="cancelled-message">Order Cancelled</p>
+                )}
+                {status === 'COMPLETED' && (
+                    <p className="completed-message">Order Completed</p>
+                )}
             </div>
-                }
-                {
-                    status === 'CANCELLED' &&
-            <p className="cancelled-message">Order Cancelled</p>
-                }
-                </div>
         </div>
     );
 };

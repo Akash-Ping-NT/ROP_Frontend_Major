@@ -20,22 +20,23 @@ const RestaurantAdmin = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchRestaurantData = async () => {
-        try {
-            getRestaurantByUserId(userId).then((data) => {
-                console.log("Heree")
-                setRestaurants(data);
-            }).catch((error) => {
-                console.error('Error fetching restaurant data:', error);
-                navigate('/create-restaurant')
-            })
-        } catch (error) {
+  const fetchRestaurantData = async () => {
+    try {
+        getRestaurantByUserId(userId).then((data) => {
+            console.log("Heree")
+            setRestaurants(data);
+        }).catch((error) => {
             console.error('Error fetching restaurant data:', error);
             navigate('/create-restaurant')
+        })
+    } catch (error) {
+        console.error('Error fetching restaurant data:', error);
+        navigate('/create-restaurant')
 
-        }
-    };
+    }
+};
+
+  useEffect(() => {
     fetchRestaurantData();
 }, [userId]);
 
@@ -85,11 +86,15 @@ const handleSubmit = async (e) => {
         setRestaurantName('');
         setDescription('');
         setImage(null);
-        closePopup();
+        closePopup(true);
+        fetchRestaurantData(); 
         navigate('/admin/restaurants');
+        
     } catch (error) {
         console.error('Error creating restaurant:', error);
     }
+
+    
 };
 
   return (
@@ -109,7 +114,8 @@ const handleSubmit = async (e) => {
             <p className="restaurant-description">{restaurant.description}</p>
             <p  className="restaurant-address">{restaurant.address}</p>
             <p className="restaurant-contact">{restaurant.contactNo}</p>
-            <p>Status: {restaurant.isOpen ? 'Open' : 'Closed'}</p>
+            <p>Status: { restaurant.open ? 'Open' : 'Closed'}</p>
+            {/* restaurant.open ? 'Open' : 'Closed' */}
           </div>
         ))}
       </div>

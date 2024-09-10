@@ -45,9 +45,13 @@ const RestaurantCategories = ({ restaurant }) => {
                 setNewCategory(''); // Clear the input field after adding
             } else {
                 console.error('Failed to add category');
+                alert('Failed to add category');
             }
         } catch (error) {
             console.error('Error adding category:', error);
+            // alert(error.response.data.message);
+            alert('Failed to add category');
+            
         }
     };
 

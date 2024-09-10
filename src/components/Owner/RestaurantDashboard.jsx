@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import './RestaurantDashboard.css';
 import RestaurantEditPopup from './RestaurantEditPopup';
-import { getRestaurantByUserId, updateRestaurantStatus, updateRestaurantDetails } from '../../utils/api'; 
 import axios from 'axios';
 import EditIcon from '../../assets/Edit-Linear-32px.svg';
 
-const RestaurantDashboard = ({restaurant, setRestaurant}) => {
+const RestaurantDashboard = ({ restaurant, setRestaurant, refreshData }) => {
     const [restaurantOpen, setRestaurantOpen] = useState(false);
-    const [isEditPopupOpen, setIsEditPopupOpen] = useState(false); 
+    const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
 
-    
     useEffect(() => {
         setRestaurantOpen(restaurant.open);
-    },[restaurant]);
+    }, [restaurant]);
+
     const updateStatus = async () => {
         try {
-            updateRestaurantStatus(restaurant?.id).then(() => {
-                setRestaurantOpen(!restaurantOpen);
-            })
+            await axios.put(`http://localhost:8081/api/restaurants/${restaurant.id}/status`);
+            setRestaurantOpen(!restaurantOpen);
         } catch (error) {
             console.error('Error updating restaurant status:', error);
         }
@@ -30,21 +28,25 @@ const RestaurantDashboard = ({restaurant, setRestaurant}) => {
     const handleEditSave = async (updatedRestaurant, image) => {
         const formData = new FormData();
         formData.append('restaurantUpdateInDTO', new Blob([JSON.stringify(updatedRestaurant)], { type: 'application/json' }));
-    
+
         if (image) {
             formData.append('multipartFile', image);
         }
         try {
             await axios.put(`http://localhost:8081/api/restaurants/${restaurant.id}/update`, formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
                 }
-            }).then(() => {
-                setRestaurant(updatedRestaurant);
-                setIsEditPopupOpen(false);
-            })
+            });
+
+            // Call refreshData to fetch updated restaurant info
+            refreshData();
+
+            // Close the popup
+            setIsEditPopupOpen(false);
+
         } catch (error) {
-            console.error('Error creating restaurant:', error);
+            console.error('Error updating restaurant:', error);
         }
     };
 
@@ -56,16 +58,18 @@ const RestaurantDashboard = ({restaurant, setRestaurant}) => {
         <div className="restaurant-dashboard">
             <div className="restaurant-dashboard-banner">
                 {restaurant.imageUrl ? (
-                    <img src={`data:image/jpeg;base64,${restaurant.imageUrl}`}
-                    alt={restaurant.restaurantName} className="restaurant-dashboard-image" />
+                    <img src={`data:image/jpeg;base64,${restaurant.imageUrl}`} alt={restaurant.restaurantName} className="restaurant-dashboard-image" />
                 ) : (
                     <div className="restaurant-dashboard-placeholder">Image Not Available</div>
                 )}
                 <div className="restaurant-dashboard-info">
                     <div>
-                        <h1 className="restaurant-dashboard-name">{restaurant.restaurantName}
-                            <button className="edit-button" onClick={handleEditClick}><img className='restaurant-dashboard-edit' src={EditIcon} alt="Edit"  /></button>
-                            </h1>                        
+                        <h1 className="restaurant-dashboard-name">
+                            {restaurant.restaurantName}
+                            <button className="edit-button" onClick={handleEditClick}>
+                                <img className='restaurant-dashboard-edit' src={EditIcon} alt="Edit" />
+                            </button>
+                        </h1>
                         <p className='restaurant-dashboard-address'>{restaurant.description}</p>
                     </div>
                     <div className='restaurant-dashboard-status-container'>

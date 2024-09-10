@@ -29,7 +29,8 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/cart" element={<PrivateRoute component={CartPage} allowedRoles={['CUSTOMER']} />} />
         <Route path="/create-restaurant" element={<PrivateRoute component={CreateRestaurant} allowedRoles={['RESTAURANT_OWNER']} />} />
-        <Route path="/dashboard" element={<CustomerDashboard />} />
+        {/* <Route path="/dashboard" element={<CustomerDashboard />} /> */}
+        <Route path="/dashboard" element={<PrivateRoute component={CustomerDashboard} allowedRoles={['CUSTOMER']} />} />
         <Route path="/dashboard/:slug" element={<PrivateRoute component={CustomerAddressDashboard} allowedRoles={['CUSTOMER']} />} />
         <Route path="/restaurant/:id/menu" element={<RestaurantOwnerMenu />} />
         <Route path="/restaurant/restaurantOwnerProfile" element={<PrivateRoute component={RestaurantOwnerProfile} allowedRoles={['RESTAURANT_OWNER']} />} />
