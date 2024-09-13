@@ -14,7 +14,12 @@ export const login = (credentials) => api.post('/users/login', credentials);
 export const register = (userData) => api.post('/users/register', userData);
 export const getUserProfile = (userId) => api.get(`/users/${userId}`);
 
-
+export const updateUserProfile = (userId, userData) => {
+  return api.put(`/users/update/${userId}`, userData);
+}
+export const updateWallet = (userId,wallet) =>{
+  return api.put(`/users/${userId}/updateWallet`, wallet)
+}
 // Restaurant
 export const createRestaurant = async (formData) => {
     const response = await fetch('http://localhost:8081/api/restaurants/addRestaurant', {

@@ -32,7 +32,7 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 100%;
+    width: auto;
 }
 
 .modal-content .modal-actions {
@@ -46,6 +46,16 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.modal-content .modal-actions button .success-button {
+    background-color: #ef9833 ;
+    color: white;
+}
+
+.modal-content .modal-actions button .cancel-button {
+    background-color: rgb(247, 44, 44);
+    color: white;
 }
 
 .modal-content .modal-actions button:hover {

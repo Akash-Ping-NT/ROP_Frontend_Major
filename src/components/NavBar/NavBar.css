@@ -21,9 +21,17 @@
 .navbar-logo {
     color: #333;
     font-size: 24px;
+    display: flex;
+    align-items: center;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
 }
 
 .navbar-logo:hover {
@@ -72,6 +80,8 @@
     margin: 2px 0;
     transition: 0.4s;
 }
+
+
 
 @media screen and (max-width: 768px) {
     .navbar-menu {

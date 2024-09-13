@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './RestaurantEditPopup.css';
 
-const RestaurantEditPopup = ({ restaurant, isOpen, onClose, onSave }) => {
+const RestaurantEditPopup = ({message, restaurant, isOpen, onClose, onSave }) => {
     const [restaurantName, setRestaurantName] = useState(restaurant.restaurantName || '');
     const [address, setAddress] = useState(restaurant.address || '');
     const [contactInformation, setContactInformation] = useState(restaurant.contactNo || '');
@@ -26,7 +26,7 @@ const RestaurantEditPopup = ({ restaurant, isOpen, onClose, onSave }) => {
         setContactInformation(restaurant.contactNo || '');
         setDescription(restaurant.description || '');
         setOpeningHours(restaurant.openingHours || '');
-    }, [restaurant]);
+    }, [restaurant,isOpen]);
 
     if (!isOpen) return null;
 
@@ -46,6 +46,7 @@ const RestaurantEditPopup = ({ restaurant, isOpen, onClose, onSave }) => {
                         value={restaurantName}
                         onChange={(e) => setRestaurantName(e.target.value)}
                     />
+                    {message.restaurantName && <p className="error">{message.restaurantName}</p>}
                 </div>
                 <div>
                     <label>Address:</label>
@@ -54,6 +55,7 @@ const RestaurantEditPopup = ({ restaurant, isOpen, onClose, onSave }) => {
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
                     />
+                    {message.address && <p className="error">{message.address}</p>}
                 </div>
                 <div>
                     <label>Description:</label>
@@ -62,6 +64,7 @@ const RestaurantEditPopup = ({ restaurant, isOpen, onClose, onSave }) => {
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                     />
+                    {message.description && <p className="error">{message.description}</p>}
                 </div>
                 <div>
                     <label>Contact Number:</label>
@@ -70,6 +73,7 @@ const RestaurantEditPopup = ({ restaurant, isOpen, onClose, onSave }) => {
                         value={contactInformation}
                         onChange={(e) => setContactInformation(e.target.value)}
                     />
+                    {message.contactInformation && <p className="error">{message.contactInformation}</p>}
                 </div>
                 <div>
                     <label>Opening Hours:</label>
@@ -78,6 +82,7 @@ const RestaurantEditPopup = ({ restaurant, isOpen, onClose, onSave }) => {
                         value={openingHours}
                         onChange={(e) => setOpeningHours(e.target.value)}
                     />
+                    {message.openingHours && <p className="error">{message.openingHours}</p>}
                 </div>
                 <div>
                     <label>
@@ -88,6 +93,7 @@ const RestaurantEditPopup = ({ restaurant, isOpen, onClose, onSave }) => {
                             accept="image/*"
                             onChange={handleImageChange}
                         />
+                    {message.image && <p className="error">{message.image}</p>}
                 </div>
                 <div className="restaurant-edit-popup-buttons">
                     <button onClick={handleSave}>Save</button>

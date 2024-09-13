@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './useraddress.css';
 import { createAddress, deleteAddress, getAllAddress, updateAddress } from '../../utils/api';
 import { states } from '../../constants/states';
+import Toast from '../Toast.jsx/Toast';
 
 const UserAddress = () => {
   const [addresses, setAddresses] = useState([
@@ -21,6 +22,11 @@ const UserAddress = () => {
     streetAddress: ''
   });
 
+  const [errors, setErrors] = useState({});
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('success');
+
   useEffect(() => {
     getAllAddress(userId).then(addresses => setAddresses(addresses));
   }, []);
@@ -28,6 +34,7 @@ const UserAddress = () => {
 
   const handleCreateAddress = () => {
     setAddressForm({ city: '', country: '', postalCode: '', state: '', streetAddress: '' });
+    setErrors({})
     setIsEditing(false);
     setShowPopup(true);
   };
@@ -41,18 +48,59 @@ const UserAddress = () => {
       state: addressToEdit.state,
       streetAddress: addressToEdit.street
     });
+    setErrors({})
     setCurrentAddressId(id);
     setIsEditing(true);
     setShowPopup(true);
   };
+
+  const validateForm = () => {
+    let newErrors = {};
+
+    if (!addressForm.streetAddress || addressForm.streetAddress.length < 5) {
+      newErrors.streetAddress = 'Street address is required and must be at least 5 characters';
+    }
+
+    if (!addressForm.city || addressForm.city.length < 3) {
+      newErrors.city = 'City is required and must be at least 3 characters';
+    }
+
+    if (!addressForm.state) {
+      newErrors.state = 'State is required';
+    }
+
+    if (!addressForm.postalCode) {
+      newErrors.postalCode = 'Postal code is required';
+    } else if (addressForm.country === 'USA' && !/^\d{5}$/.test(addressForm.postalCode)) {
+      newErrors.postalCode = 'Postal code for USA must be exactly 5 digits';
+    } else if (addressForm.country !== 'USA' && !/^[A-Za-z0-9]{6,7}$/.test(addressForm.postalCode)) {
+      newErrors.postalCode = 'Postal code must be 6-7 characters';
+    }
+
+    if (!addressForm.country || addressForm.country.length < 2) {
+      newErrors.country = 'Country is required and must be at least 2 characters';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+
 
 
   useEffect(() => {
     console.log(addresses)
   },[addresses])
   const handleSaveAddress = () => {
+    if (!validateForm()) {
+      return; // If validation fails, stop execution here
+    }
+
     if (isEditing) {
       updateAddress(currentAddressId, addressForm).then(response => {
+        setToastMessage(response.message);
+          setToastType('success');
+          setShowToast(true);
         getAllAddress(userId).then(addresses => setAddresses(addresses));
       })
       getAllAddress(userId).then(addresses => setAddresses(addresses));
@@ -60,6 +108,9 @@ const UserAddress = () => {
       const newAddress = { ...addressForm, userId };
 
       createAddress(newAddress).then(response => {
+        setToastMessage(response.message);
+        setToastType('success');
+        setShowToast(true);
         getAllAddress(userId).then(addresses => setAddresses(addresses));      })
     }
     setShowPopup(false);
@@ -69,11 +120,15 @@ const UserAddress = () => {
   const handleCancel = () => {
     setShowPopup(false);
     setAddressForm({ city: '', country: '', postalCode: '', state: '', streetAddress: '' });
+    setErrors({})
   };
 
   const handleDeleteAddress = (id) => {
     deleteAddress(id).then(() => {
       getAllAddress(userId).then(addresses => setAddresses(addresses));
+      setToastMessage('Address deleted successfully');
+        setToastType('success');
+        setShowToast(true);
       }).catch(error => {
       console.error('Error deleting address:', error);
     })
@@ -129,6 +184,7 @@ const UserAddress = () => {
               value={addressForm.streetAddress}
               onChange={handleInputChange}
             />
+             {errors.streetAddress && <p className="error">{errors.streetAddress}</p>}
             <input
               type="text"
               name="city"
@@ -136,6 +192,8 @@ const UserAddress = () => {
               value={addressForm.city}
               onChange={handleInputChange}
             />
+            {errors.city && <p className="error">{errors.city}</p>}
+
             <select
               name="state"
               value={addressForm.state}
@@ -148,6 +206,8 @@ const UserAddress = () => {
                 </option>
               ))}
             </select>
+            {errors.state && <p className="error">{errors.state}</p>}
+
             <input
               type="text"
               name="postalCode"
@@ -155,6 +215,8 @@ const UserAddress = () => {
               value={addressForm.postalCode}
               onChange={handleInputChange}
             />
+             {errors.postalCode && <p className="error">{errors.postalCode}</p>}
+
             <input
               type="text"
               name="country"
@@ -162,12 +224,22 @@ const UserAddress = () => {
               value={addressForm.country}
               onChange={handleInputChange}
             />
+             {errors.country && <p className="error">{errors.country}</p>}
+
             <div className="popup-actions">
               <button onClick={handleSaveAddress}>{isEditing ? 'Update' : 'Save'}</button>
               <button onClick={handleCancel}>Cancel</button>
             </div>
           </div>
         </div>
+      )}
+
+{showToast && (
+        <Toast
+          message={toastMessage}
+          type={toastType}
+          onClose={() => setShowToast(false)}
+        />
       )}
     </div>
   );

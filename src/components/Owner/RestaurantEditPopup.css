@@ -51,7 +51,7 @@
     border: none;
     margin-left: 10px;
     border-radius: 4px;
-    background-color: #F4F4F4;
+    background-color: #F4F4F4 !important;
     color: white;
     cursor: pointer;
     font-weight: bold;

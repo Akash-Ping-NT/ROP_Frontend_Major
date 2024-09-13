@@ -5,10 +5,22 @@
   }
   
   .dashboard-content {
-    margin-left: 300px; /* This pushes the content to the right of the sidebar */
+    margin-left: 251px; /* This pushes the content to the right of the sidebar */
     flex-grow: 1;
     padding: 20px;
     background-color: #f4f4f4;
     min-height: 100vh; /* Ensure content takes the full viewport height */
-    transition: margin-left 0.3s ease; /* Smooth transition for content */
+    /* transition: margin-left 0.3s ease; */
+}
+
+@media screen and (max-width: 768px) {
+    .dashboard-content {
+      margin-left: 0%; /* This pushes the content to the right of the sidebar */
+    /* flex-grow: 1; */
+    padding: 20px;
+    background-color: #f4f4f4;
+    min-height: 100vh; /* Ensure content takes the full viewport height */
+    /* transition: margin-left 0.3s ease;  */
+  
+}
 }

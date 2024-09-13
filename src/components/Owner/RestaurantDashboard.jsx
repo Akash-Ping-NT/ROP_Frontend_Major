@@ -7,6 +7,7 @@ import EditIcon from '../../assets/Edit-Linear-32px.svg';
 const RestaurantDashboard = ({ restaurant, setRestaurant, refreshData }) => {
     const [restaurantOpen, setRestaurantOpen] = useState(false);
     const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
+    const [message, setMessage] = useState({});
 
     useEffect(() => {
         setRestaurantOpen(restaurant.open);
@@ -33,7 +34,7 @@ const RestaurantDashboard = ({ restaurant, setRestaurant, refreshData }) => {
             formData.append('multipartFile', image);
         }
         try {
-            await axios.put(`http://localhost:8081/api/restaurants/${restaurant.id}/update`, formData, {
+            const response = await axios.put(`http://localhost:8081/api/restaurants/${restaurant.id}/update`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
@@ -47,10 +48,12 @@ const RestaurantDashboard = ({ restaurant, setRestaurant, refreshData }) => {
 
         } catch (error) {
             console.error('Error updating restaurant:', error);
+            setMessage(error.response.data);
         }
     };
 
     const handleEditClose = () => {
+        setMessage({});
         setIsEditPopupOpen(false);
     };
 
@@ -86,6 +89,7 @@ const RestaurantDashboard = ({ restaurant, setRestaurant, refreshData }) => {
             </div>
             
             <RestaurantEditPopup
+                message={message}
                 restaurant={restaurant}
                 isOpen={isEditPopupOpen}
                 onClose={handleEditClose}

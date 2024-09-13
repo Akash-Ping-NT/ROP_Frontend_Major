@@ -1,10 +1,15 @@
 .dashboard-container {
     display: flex;
+    height: fit-content;
+    /* display: grid;
+    grid-template-columns: 18% 82%;
     height: 100vh;
+    margin-top: 70px; */
+    
   }
   
   .sidebar {
-    width: 250px;
+    width: 210px;
     background-color: #333;
     color: #fff;
     padding: 20px;
@@ -27,8 +32,10 @@
   .sidebar ul li a {
     color: #fff;
     text-decoration: none;
+    
     font-size: 16px;
-    display: block;
+    display: flex;
+    gap: 10px;
     padding: 10px;
     border-radius: 4px;
   }

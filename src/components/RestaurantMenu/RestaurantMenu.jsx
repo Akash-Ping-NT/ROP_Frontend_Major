@@ -3,6 +3,7 @@ import './RestaurantMenu.css';
 import axios from 'axios';
 import MenuItemModal from './MenuItemModal';
 import { useParams } from 'react-router-dom';
+import Toast from '../Toast.jsx/Toast';
 
 const RestaurantMenu = ({ restaurant }) => {
     const [menuItems, setMenuItems] = useState([]);
@@ -18,6 +19,13 @@ const RestaurantMenu = ({ restaurant }) => {
     const userId = localStorage.getItem('userId');
     const [editingMenuItem, setEditingMenuItem] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastType, setToastType] = useState('success');
+
+    useEffect(() => {
+        console.log(showToast);
+    }, [showToast]);
 
     useEffect(() => {
 
@@ -86,6 +94,18 @@ const RestaurantMenu = ({ restaurant }) => {
                         'Content-Type': 'multipart/form-data'
                     }
                 });
+                if(response.status === 200) {
+                    setToastMessage(response.data.message);
+                    setToastType('success');
+                    setShowToast(true);
+                    fetchMenuItems();
+                    closeModal();
+                }else{
+                    console.error('Failed to save menu item');
+                    setToastMessage(response.data.message);
+                    setToastType('error');
+                    setShowToast(true);
+                }
             } else {
                 formData.append('menuItemInDTO', new Blob([JSON.stringify({
                     restaurantId:  restaurant.id,
@@ -104,19 +124,25 @@ const RestaurantMenu = ({ restaurant }) => {
                         'Content-Type': 'multipart/form-data'
                     }
                 });
-            }
-
-            if (response.status === 201 || response.status === 200) {
-                const updatedMenuItem = response.data;
-                fetchMenuItems();
-                closeModal();
-            } else {
-                console.error('Failed to save menu item');
+                if(response.status === 201) {
+                    setToastMessage(response.data.message);
+                    setToastType('success');
+                    setShowToast(true);
+                    fetchMenuItems();
+                    closeModal();
+                }else{
+                    console.error('Failed to save menu item');
+                    setToastMessage(response.data.message);
+                    setToastType('error');
+                    setShowToast(true);
+                }
             }
         } catch (error) {
-            console.error('Error saving menu item:', error);
+            console.error('Error saving menu item:xvc', error);
             const errorMessage = error.response?.data?.message || 'Invalid or Empty Input';
-            alert(errorMessage);
+            setToastMessage(errorMessage);
+            setToastType('error');
+            setShowToast(true);
             // setPopUp({ visible: true, message: errorMessage, type: 'error', redirect: '' });
 
         }
@@ -143,8 +169,15 @@ const RestaurantMenu = ({ restaurant }) => {
             });
 
             if (response.status === 200) {
+                const res = await response.json();
+                setToastMessage(res.message);
+                setToastType('success');
+                setShowToast(true);
                 fetchMenuItems();
             } else {
+                setToastMessage(response.message);
+                setToastType('error');
+                setShowToast(true);
                 console.error('Failed to delete menu item');
             }
         } catch (error) {
@@ -157,19 +190,28 @@ const RestaurantMenu = ({ restaurant }) => {
             const response = await fetch(`http://localhost:8081/api/menuItems/menuItem/${menuItem.id}/status`, {
                 method: 'PUT',
             });
-
+            console.log(response);
             if (response.status === 200) {
+                const res = await response.json();
+                setToastMessage(res.message);
+                setToastType('success');
+                setShowToast(true);
                 fetchMenuItems();
             } else {
+                setToastMessage(response.message);
+                setToastType('error');
+                setShowToast(true);
                 console.error('Failed to toggle availability');
             }
         } catch (error) {
+            
             console.error('Error toggling availability:', error);
         }
     };
 
     return (
         <div className="menu-manager">
+           {showToast && <Toast message={toastMessage} onClose={()=>{setShowToast(false)}} showToast={showToast} type={toastType}  /> }
             <div className="header">
                 <h2>Menu Items</h2>
                 <button className="add-button" onClick={openModal}>Add Item</button>
@@ -208,6 +250,7 @@ const RestaurantMenu = ({ restaurant }) => {
                 handleFileChange={handleFileChange}
                 restaurantId={restaurant?.id}
             />
+            
         </div>
     );
 };
