@@ -1,0 +1,159 @@
+/* General Layout */
+.checkout-page {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+h2, h3 {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+h3 {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+p {
+    margin: 0;
+    padding: 5px 0;
+    color: #555;
+}
+
+/* Address Selection */
+.address-selection {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 8px;
+}
+
+.address-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.address-option input[type="radio"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+}
+
+.address-option label {
+    font-size: 16px;
+    color: #333;
+}
+
+.address-option:hover {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* Cart Items Section */
+.cart-items-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    /* margin-bottom: 20px; */
+}
+
+.cart-items-section-next {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    /* margin-bottom: 20px; */
+    margin: 0;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-item p {
+    font-size: 16px;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+/* Total Price */
+.total-price {
+    font-size: 18px;
+    color: #333;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 8px;
+}
+
+/* Place Order Button */
+.place-order-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.place-order-button:hover {
+    background-color: #218838;
+}
+
+/* Clear Cart Button (optional, you can use this if necessary) */
+.clear-cart-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.clear-cart-button:hover {
+    background-color: #c82333;
+}
+
+/* Order Placed Popup */
+.order-placed-popup {
+    background-color: #e9f5ee;
+    border: 2px solid #28a745;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    color: #28a745;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 100px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

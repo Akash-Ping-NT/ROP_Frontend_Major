@@ -10,6 +10,8 @@ const CreateRestaurantForm = () => {
     const [openingHours, setOpeningHours] = useState('');
     const [image, setImage] = useState(null); 
     const [error, setError] = useState('');
+    const [description, setDescription] = useState('');
+
     const navigate = useNavigate(); 
 
     const userId = localStorage.getItem('userId'); 
@@ -26,9 +28,10 @@ const CreateRestaurantForm = () => {
         e.preventDefault();
         
         const formData = new FormData();
-        formData.append('createRestaurantRequestDTO', new Blob([JSON.stringify({
+        formData.append('restaurantInDTO', new Blob([JSON.stringify({
             userId, 
             restaurantName,
+            description,
             address,
             contactInformation,
             openingHours
@@ -44,7 +47,7 @@ const CreateRestaurantForm = () => {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            navigate('/restaurant');
+            navigate('/admin/restaurants');
         } catch (error) {
             setError('An error occurred while creating the restaurant');
             console.error('Error creating restaurant:', error);
@@ -69,6 +72,17 @@ const CreateRestaurantForm = () => {
                 </div>
                 <div>
                     <label>
+                        Description:
+                    </label>
+                        <textarea
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            required
+                            rows={5}
+                        />
+                </div>
+                <div>
+                    <label>
                         Address:
                     </label>
                         <input
@@ -89,6 +103,7 @@ const CreateRestaurantForm = () => {
                             required
                         />
                 </div>
+                
                 <div>
                     <label>
                         Opening Hours:

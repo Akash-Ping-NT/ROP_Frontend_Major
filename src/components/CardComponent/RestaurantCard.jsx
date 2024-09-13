@@ -3,9 +3,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './RestaurantCard.css';
 
-const RestaurantCard = ({ id, name, status, imageUrl }) => {
+const RestaurantCard = ({ id, name, status, imageUrl, openingHours, description }) => {
     return (
-        <Link to={`/restaurant/${id}`} className="restaurant-card-link">
+        <Link to={`/restaurant/${id}`} className="restaurant-card-link homepage-card">
             <div className="restaurant-card">
                 <div className="restaurant-image-container">
                     <img
@@ -19,6 +19,8 @@ const RestaurantCard = ({ id, name, status, imageUrl }) => {
                 </div>
                 <div className="restaurant-details">
                     <h3 className="restaurant-name">{name}</h3>
+                    <p className="restaurant-description-card">{description}</p>
+                    {/* <p className='restaurant-opening-hours'>{openingHours}</p> */}
                 </div>
             </div>
         </Link>

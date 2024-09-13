@@ -2,7 +2,6 @@
     text-decoration: none;
     color: inherit;
     display: inline-block;
-    width: 350px; 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 25px;
 }
@@ -13,19 +12,22 @@
     text-decoration: none; 
 }
 
-.restaurant-card {
+
+.homepage-card .restaurant-card {
     background-color: #ffffff;
     border-radius: 15px;
     overflow: hidden;
+    padding: 0;
+    width: 300px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
-    height: 400px; /* Adjust height as needed */
+    height: 300px; /* Adjust height as needed */
     display: flex;
     flex-direction: column;
 }
 
 .restaurant-image-container {
-    height: 70%; /* Adjust the height of the image container */
+    height: 200px; /* Adjust the height of the image container */
     overflow: hidden;
 }
 
@@ -43,17 +45,36 @@
     justify-content: center;
 }
 
-.restaurant-name {
+.restaurant-details .restaurant-name, .restaurant-opening-hours {
     font-size: 22px;
     font-weight: 700;
+    text-align: start;
     color: #333;
     margin: 0;
 }
 
+.restaurant-details .restaurant-description {
+    font-weight: 200;
+    font-size: 14px;
+    text-align: left;
+}
+
+.restaurant-details .restaurant-description-card {
+    font-weight: 200;
+    font-size: 14px;
+    text-align: left;
+
+}
+
+.restaurant-details .restaurant-opening-hours {
+    font-weight: 200;
+    font-size: 14px;
+}
+
 .restaurant-status {
     position: absolute;
-    top: 25px;
-    left: 25px;
+    top: 15px;
+    left: 15px;
     font-size: 14px;
     font-weight: 600;
     padding: 6px 12px;

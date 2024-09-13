@@ -6,7 +6,7 @@ import './userprofile.css';
 
 const UserProfile = () => {
   const [userProfile, setUserProfile] = useState({
-    firstName: 'Anil ',
+    firstName: 'Akash ',
     lastName: 'Ping',
     role: 'owner',
     email: 'asjhdkj@gmial.com',
@@ -49,7 +49,7 @@ const UserProfile = () => {
           {userProfile?.firstName?.charAt(0)} {userProfile?.lastName?.charAt(0)}
         </div>
         <h1>{[userProfile?.firstName, userProfile?.lastName].join(' ')}</h1>
-        <p className="role">{userProfile?.role}</p>
+        {/* <p className="role">{userProfile?.role}</p> */}
       </div>
       <div className="profile-body">
         <div className="profile-info">
@@ -66,9 +66,9 @@ const UserProfile = () => {
         </div>
       </div>
       <div className="profile-footer">
-        <button onClick={() => navigate('/update-profile')} className="edit-button">
+        {/* <button onClick={() => navigate('/update-profile')} className="edit-button">
           Edit Profile
-        </button>
+        </button> */}
       </div>
     </div>
   );

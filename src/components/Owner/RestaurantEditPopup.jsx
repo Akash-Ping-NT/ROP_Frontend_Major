@@ -5,6 +5,7 @@ const RestaurantEditPopup = ({ restaurant, isOpen, onClose, onSave }) => {
     const [restaurantName, setRestaurantName] = useState(restaurant.restaurantName || '');
     const [address, setAddress] = useState(restaurant.address || '');
     const [contactInformation, setContactInformation] = useState(restaurant.contactNo || '');
+    const [description, setDescription] = useState(restaurant.description || '');
     const [openingHours, setOpeningHours] = useState(restaurant.openingHours || '');
     const [image, setImage] = useState(null);
     const handleSave = () => {
@@ -12,6 +13,7 @@ const RestaurantEditPopup = ({ restaurant, isOpen, onClose, onSave }) => {
             ...restaurant,
             restaurantName,
             address,
+            description,
             contactInformation,
             openingHours,
         };
@@ -22,6 +24,7 @@ const RestaurantEditPopup = ({ restaurant, isOpen, onClose, onSave }) => {
         setRestaurantName(restaurant.restaurantName || '');
         setAddress(restaurant.address || '');
         setContactInformation(restaurant.contactNo || '');
+        setDescription(restaurant.description || '');
         setOpeningHours(restaurant.openingHours || '');
     }, [restaurant]);
 
@@ -50,6 +53,14 @@ const RestaurantEditPopup = ({ restaurant, isOpen, onClose, onSave }) => {
                         type="text"
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <label>Description:</label>
+                    <input
+                        type="text"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                     />
                 </div>
                 <div>

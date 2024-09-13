@@ -4,6 +4,10 @@
     /* padding: 20px; */
 }
 
+#restaurants-breaker{
+    height: 30px;
+}
+
 .home-header {
     margin-bottom: 40px;
 }
@@ -26,7 +30,7 @@
 .hero-image {
     width: 100%;
     height: auto;
-    max-height: 650px;
+    max-height: 727px;
     object-fit: cover;
 }
 
@@ -94,8 +98,8 @@
 }
 
 .home-restaurants h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
+    font-size: 35px;
+    margin-bottom: 40px;
 }
 
 .restaurant-cards {
@@ -112,10 +116,10 @@
     margin-top: 50px;
 }
 
-.home-restaurants h2 {
+/* .home-restaurants h2 {
     font-size: 28px;
     margin-bottom: 20px;
-}
+} */
 
 .restaurant-cards {
     display: flex;
@@ -147,4 +151,5 @@
     font-size: 24px;
     margin-bottom: 20px;
     color: black;
+    font-family: 'Poppins';
 }
