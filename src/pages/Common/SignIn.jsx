@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
 import Popup from '../../components/PopUp/PopUp';
 import { login } from '../../utils/api';
 import './SignIn.css';
+
+
 
 const SignIn = ({ onSwitchToSignUp, onClose }) => {
   const [email, setEmail] = useState('');
@@ -17,6 +19,7 @@ const SignIn = ({ onSwitchToSignUp, onClose }) => {
     redirect: '',
   });
 
+  const sessionFlag = useRef(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -85,7 +88,7 @@ const SignIn = ({ onSwitchToSignUp, onClose }) => {
         });
       }
     } catch (error) {
-      const errorMessage = error.response?.data?.error || 'Invalid credentials';
+      const errorMessage = error.response.data.message || 'Invalid credentials';
       setPopUp({ visible: true, message: errorMessage, type: 'error', redirect: '' });
 
     }

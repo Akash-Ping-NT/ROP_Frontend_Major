@@ -1,0 +1,46 @@
+.toast {
+    background-color: rgba(245, 239, 239, 0.866);
+    color: white;
+    padding: 16px;
+    border-radius: 5px;
+    position: fixed;
+    left: calc(50% - 150px);
+    top: 100px;
+    z-index: 1000;
+    max-width: 300px;
+    align-content: center;
+    font-size: 14px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .toast.show {
+    opacity: 1;
+  }
+  
+  .toast.hide {
+    opacity: 0;
+  }
+  
+  .toast p {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .toast-underline {
+    height: 4px;
+    width: 100%;
+    margin-top: 10px;
+    background-color: #E38B29(126, 128, 0);
+    transition: width 3s linear; /* Decreases width over 3 seconds */
+  }
+  
+  .toast.success .toast-underline {
+    background-color: #E38B29;
+  }
+  
+  .toast.error .toast-underline {
+    background-color: #E38B29;
+  }
+  

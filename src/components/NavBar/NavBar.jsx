@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FaHome, FaReceipt, FaShoppingCart, FaUser } from 'react-icons/fa';
+import { FaDashcube, FaHome, FaHouseDamage, FaReceipt, FaShoppingCart, FaUser } from 'react-icons/fa';
 import { AiOutlineMail } from 'react-icons/ai';
 import './NavBar.css';
 import AuthModal from '../AuthModal/AuthModal'; // Ensure this path is correct
 import userEvent from '@testing-library/user-event';
+import { FaUniversalAccess } from 'react-icons/fa6';
 
 const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -38,6 +39,7 @@ const NavBar = () => {
         <nav className="navbar">
             <div className="navbar-container">
                 <Link to={role=='RESTAURANT_OWNER' ? '/admin/restaurants' : '/'} className="navbar-logo">
+                   <img src='/logo_icon.png' alt="logo" className='logo' />
                     TastyBites
                 </Link>
                 <div className={`navbar-menu ${openSidebar ? 'active' : ''}`}>
@@ -47,10 +49,11 @@ const NavBar = () => {
                         <span>Home</span>
                     </Link>
                     }
-                    {loggedIn && role !== 'RESTAURANT_OWNER' && !location.pathname.startsWith('/dashboard') && 
+                    {loggedIn && role !== 'RESTAURANT_OWNER' && 
+                    // !location.pathname.startsWith('/dashboard') && 
                     
                      <Link to="/dashboard" className="navbar-link">
-                        <FaHome className="navbar-icon" />
+                        <FaUniversalAccess className="navbar-icon" />
                         <span>Dashboard</span>
                     </Link>
                     }

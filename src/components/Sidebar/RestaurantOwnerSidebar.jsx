@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import './Sidebar.css';
+import { FaHome } from 'react-icons/fa';
 
 const Sidebar = ({restaurantId}) => {
   const location = useLocation();
@@ -13,7 +14,7 @@ const Sidebar = ({restaurantId}) => {
         </li>
         <li>
           <NavLink to={`/admin/restaurants/${restaurantId}/dashboard`} className={location.pathname === `/admin/restaurants/${restaurantId}/dashboard` ? 'active-link' : undefined}>
-            Dashboard
+            <FaHome />Dashboard
           </NavLink>
         </li>
         <li>

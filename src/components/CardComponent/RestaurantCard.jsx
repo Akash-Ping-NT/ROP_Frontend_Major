@@ -5,8 +5,8 @@ import './RestaurantCard.css';
 
 const RestaurantCard = ({ id, name, status, imageUrl, openingHours, description }) => {
     return (
-        <Link to={`/restaurant/${id}`} className="restaurant-card-link homepage-card">
-            <div className="restaurant-card">
+        <Link to={ status === 'Open' ? `/restaurant/${id}` : '#'} className={`restaurant-card-link homepage-card`}>
+            <div className={`restaurant-card ${status === 'Open' ? 'open-card' : 'closed-card'}`}>
                 <div className="restaurant-image-container">
                     <img
                         src={`data:image/jpeg;base64,${imageUrl}`}

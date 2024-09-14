@@ -20,7 +20,7 @@
 /* Add restaurant button */
 .add-restaurant-btn {
   padding: 12px 25px;
-  background-color: #28a745;
+  background-color: #E38B29;
   color: white;
   border: none;
   border-radius: 8px;
@@ -30,7 +30,7 @@
 }
 
 .add-restaurant-btn:hover {
-  background-color: #218838;
+  background-color: #e07903;
 }
 
 /* Restaurant cards container */

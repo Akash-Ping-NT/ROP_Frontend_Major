@@ -62,7 +62,7 @@ const Checkout = () => {
             },5000)
         } catch (error) {
             console.error('Error placing order');
-            alert(`Error placing order: ${error.response.data.message}`);
+            alert(`Error placing order: ${error.response.data.cartIds}`);
         }
     };
 

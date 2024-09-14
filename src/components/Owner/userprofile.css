@@ -70,14 +70,25 @@
   .profile-info .balance {
     font-weight: bold;
     color: #28a745;
+    position: relative;
+  }
+  
+  .profile-info .balance .plus-icon {
+    position: absolute;
+    cursor: pointer;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: inherit;
   }
   
   .profile-footer {
     text-align: center;
   }
   
-  .edit-button {
-    background-color:#F1A661;
+  .edit-button-profile {
+    background-color:#F1A661 !important;
     color: #ffffff;
     border: none;
     padding: 0.75rem 1.5rem;

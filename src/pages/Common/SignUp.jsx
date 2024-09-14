@@ -33,7 +33,7 @@ const SignUp = ({ onSwitchToSignIn, onClose }) => {
           newErrors.contactNumber = 'Contact number is required';
       } else if (!/^\d{10}$/.test(contactNumber)) {
           newErrors.contactNumber = 'Contact number must be exactly 10 digits';
-      } else if (!/^986/.test(contactNumber)) {
+      } else if (!/^[986]/.test(contactNumber)) {
           newErrors.contactNumber = 'Contact number must start with 986';
       }
 
@@ -81,7 +81,7 @@ const SignUp = ({ onSwitchToSignIn, onClose }) => {
           redirect: role === 'CUSTOMER' ? '/dashboard' : '/create-restaurant',
         });
       }  catch (error) {
-        const errorMessage = error.response?.data?.error || 'An unexpected error occurred';
+        const errorMessage = error.response?.data?.message || 'An unexpected error occurred';
         setPopUp({ visible: true, message: errorMessage, type: 'error', redirect: '' });
   ;
       }

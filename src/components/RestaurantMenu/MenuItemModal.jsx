@@ -5,16 +5,20 @@ import './MenuItemModal.css';
 const MenuItemModal = ({ isOpen, onClose, onSubmit, menuItem, setMenuItem, handleFileChange }) => {
     const { id: restaurantId } = useParams();
     const [categories, setCategories] = useState([]);
-    console.log(menuItem);
 
     useEffect(() => {
         if (restaurantId) {
             fetch(`http://localhost:8081/api/categories/getAllCategory/${restaurantId}`)
                 .then(response => response.json())
-                .then(data => setCategories(data))
+                .then(data => {setCategories(data);
+                    setMenuItem(prevState => ({
+                        ...prevState,
+                        categoryId: data.find(category => category.name == menuItem.categoryName)?.id
+                    }))
+                })
                 .catch(error => console.error('Error fetching categories:', error));
         }
-    }, [restaurantId]);
+    }, [restaurantId,isOpen]);
 
     if (!isOpen) return null;
 
@@ -33,7 +37,7 @@ const MenuItemModal = ({ isOpen, onClose, onSubmit, menuItem, setMenuItem, handl
 
                 <select
                     name="categoryId"
-                    value={menuItem.categoryId || ""}
+                    value={menuItem.categoryId || categories.find(category => category.name == menuItem.categoryName)?.id}
                     onChange={handleCategoryChange}
                     placeholder="Select category"
                 >
@@ -43,7 +47,7 @@ const MenuItemModal = ({ isOpen, onClose, onSubmit, menuItem, setMenuItem, handl
                             {category.name}
                         </option>
                     ))}
-                </select>
+                </select> 
 
                 <input
                     type="text"

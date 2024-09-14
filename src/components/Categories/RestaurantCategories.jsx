@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './RestaurantCategories.css'; // Import CSS for styling
+import Toast from '../Toast.jsx/Toast';
 
 const RestaurantCategories = ({ restaurant }) => {
     const [categories, setCategories] = useState([]);
     const [newCategory, setNewCategory] = useState('');
     const [editingCategory, setEditingCategory] = useState(null); // Track the category being edited
     const [editingName, setEditingName] = useState(''); // Track the new name during editing
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastType, setToastType] = useState('success');
 
     useEffect(() => {
         // Fetch existing categories from the backend for the specific restaurantId
@@ -40,7 +44,11 @@ const RestaurantCategories = ({ restaurant }) => {
             });
 
             if (response.status === 201) {
-                const addedCategory = await response.json();
+                const res= await response.json();
+                setToastMessage(res.message);
+                setToastType('success');
+                setShowToast(true);
+
                 fetchCategories();
                 setNewCategory(''); // Clear the input field after adding
             } else {
@@ -78,14 +86,23 @@ const RestaurantCategories = ({ restaurant }) => {
             });
 
             if (response.status === 200) {
-                const updatedCategory = await response.json();
+                const res = await response.json();
+                setToastMessage(res.message);
+                setToastType('success');
+                setShowToast(true);
+                
                 fetchCategories();
                 cancelEditing();
             } else {
                 console.error('Failed to update category');
+                const res = await response.json();
+                setToastMessage(res.message);
+                setToastType('error');
+                setShowToast(true);
             }
         } catch (error) {
             console.error('Error updating category:', error);
+            alert(error.response.data.message);
         }
     };
 
@@ -96,9 +113,18 @@ const RestaurantCategories = ({ restaurant }) => {
             });
 
             if (response.status === 200) {
+                const res = await response.json();
+                setToastMessage(res.message);
+                setToastType('success');
+                setShowToast(true);
                 fetchCategories();
+
             } else {
                 console.error('Failed to delete category');
+                const res = await response.json();
+                setToastMessage(res.message);
+                setToastType('error');
+                setShowToast(true);
             }
         } catch (error) {
             console.error('Error deleting category:', error);
@@ -145,6 +171,9 @@ const RestaurantCategories = ({ restaurant }) => {
                     </li>
                 ))}
             </ul>
+            {
+                showToast && <Toast message={toastMessage} type={toastType} showToast={showToast} onClose={() => setShowToast(false)} />
+            }
         </div>
     );
 };

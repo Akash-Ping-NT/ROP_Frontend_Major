@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getUserProfile } from '../../utils/api';
+import { getUserProfile, updateUserProfile, updateWallet } from '../../utils/api';
 import './userprofile.css';
+import { FaPlus } from 'react-icons/fa';
+import Toast from '../Toast.jsx/Toast';
 
 const UserProfile = () => {
   const [userProfile, setUserProfile] = useState({
@@ -15,26 +17,32 @@ const UserProfile = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [walletPopup, setWalletPopup] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('');
   const { user } = useSelector((state) => state.auth);
   const userId = user?.userId;
   const navigate = useNavigate();
 
+  const fetchUserProfile = async () => {
+    if (!userId) {
+      setError('User ID is missing');
+      setLoading(false);
+      return;
+    }
+    try {
+      const response = await getUserProfile(userId);
+      setUserProfile(response.data);
+    } catch (error) {
+      setError('Failed to fetch user profile');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      if (!userId) {
-        setError('User ID is missing');
-        setLoading(false);
-        return;
-      }
-      try {
-        const response = await getUserProfile(userId);
-        setUserProfile(response.data);
-      } catch (error) {
-        setError('Failed to fetch user profile');
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchUserProfile();
   }, [userId]);
 
@@ -62,16 +70,155 @@ const UserProfile = () => {
         </div>
         <div className="profile-info">
           <label>Wallet Balance</label>
-          <p className="balance">₹{userProfile?.walletBalance}</p>
+          <p className="balance">₹{userProfile?.walletBalance} <FaPlus onClick={() => setWalletPopup(true)} className="plus-icon"/></p>
         </div>
       </div>
       <div className="profile-footer">
-        {/* <button onClick={() => navigate('/update-profile')} className="edit-button">
+        <button onClick={() => setShowPopup(true)} className="edit-button-profile">
           Edit Profile
-        </button> */}
+        </button>
       </div>
+      {showPopup && <UpdateProfileForm profile={userProfile} onClose={() => setShowPopup(false)}  onSave={()=>{
+        setShowToast(true);
+        setToastMessage('Profile updated successfully');
+        setToastType('success');
+        setShowPopup(false);
+        fetchUserProfile();
+        }} />}
+        {
+          showToast && <Toast message={toastMessage} type={toastType} onClose={() => setShowToast(false)} />
+        }
+        {
+          walletPopup && <UpdateWalletForm profile={userProfile} onClose={() => setWalletPopup(false)}  onSave={(message)=>{
+            setShowToast(true);
+            setToastMessage(message);
+            setToastType('success');
+            setWalletPopup(false);
+            fetchUserProfile();}}/>
+        }
+    </div>
+  );
+};
+
+const UpdateProfileForm = ({ profile, onClose, onSave}) => {
+  const [firstName, setFirstName] = useState(profile.firstName);
+  const [lastName, setLastName] = useState(profile.lastName);
+  const [contactNumber, setContactNumber] = useState(profile.contactNumber);
+  const [email, setEmail] = useState(profile.email);
+  const userData = useSelector((state) => state.auth.user);
+  const [message, setMessage] = useState('');
+  
+  
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const handleUpdate = () => {
+    updateUserProfile(userData.userId, { firstName, lastName, contactNumber, email }).then(() => {
+      console.log('Profile updated successfullyefsdsf');
+      onSave();
+    }).catch((error) => {
+      // console.error('Error updating profile:', error);
+      console.log(error.response.data);
+      setMessage(error.response.data);
+    });
+  };
+  return (
+    <>
+    <div className="modal-overlay">
+            <div className="modal-content">
+    <form  onSubmit={handleSubmit}>
+      <label>
+        First Name
+        <input
+          type="text"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
+      </label>
+      {message.firstName && <p className="error">{message?.firstName}</p>}
+      <label>
+        Last Name
+        <input
+          type="text"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+        />
+      </label>
+      {message.lastName && <p className="error">{message?.lastName}</p>}
+      <label>
+        Contact Number
+        <input
+          type="tel"
+          value={contactNumber}
+          onChange={(e) => setContactNumber(e.target.value)}
+        />
+      </label>
+      {message.contactNumber && <p className="error">{message?.contactNumber}</p>}
+      <label>
+        Email
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </label>
+      {message.email && <p className="error">{message?.email}</p>}
+      <div className='modal-actions'>
+      <button className='success-button' onClick={handleUpdate}>Update Profile</button>
+      <button className='cancel-button' onClick={onClose}>Cancel</button>
+      </div>
+    </form>
+    </div>
+    </div>
+      </>
+  );
+};
+
+
+const UpdateWalletForm = ({ profile, onClose, onSave}) => {
+  const [walletBalance, setWalletBalance] = useState();
+  const userData = useSelector((state) => state.auth.user);
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onClose();
+  };  
+
+  const handleUpdate = () => {
+    updateWallet(userData.userId, { newBalance: parseFloat(walletBalance) + parseFloat(profile.walletBalance) }).then((response) => {
+      onSave(response.data.message);
+    }).catch((error) => {
+      console.error('Error updating profile:', error);
+      setMessage('Failed to update profile');
+    });
+  };  
+
+  return (
+    <div className="modal-overlay">
+            <div className="modal-content">
+    <form onSubmit={handleSubmit}>
+      <label>
+        Wallet Balance
+        <div>
+        <input
+          type="number"
+          value={walletBalance}
+          onChange={(e) => setWalletBalance(e.target.value)}
+        />
+        </div>
+      </label>
+      <div className='modal-actions'>
+      <button className='success-button' onClick={handleUpdate}>Update Wallet</button> 
+      <button className='cancel-button' onClick={onClose}>Cancel</button>
+      </div>
+    </form>
+    </div>
     </div>
   );
 };
 
 export default UserProfile;
+
