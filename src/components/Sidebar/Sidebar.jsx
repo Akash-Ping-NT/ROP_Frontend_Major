@@ -15,12 +15,12 @@ const Sidebar = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/dashboard/orders" activeClassName="active-link">
+          <NavLink to="/dashboard/orders"  className={location.pathname === '/dashboard/orders' ? 'active-link' : undefined}>
             <FaReceipt size={20}/> Orders
           </NavLink>
         </li>
         <li>
-          <NavLink to="/dashboard/address" activeClassName="active-link">
+          <NavLink to="/dashboard/address"  className={location.pathname === '/dashboard/address' ? 'active-link' : undefined}>
             <FaBuilding size={20}/> Address
           </NavLink>
         </li>

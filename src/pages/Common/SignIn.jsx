@@ -94,11 +94,16 @@ const SignIn = ({ onSwitchToSignUp, onClose }) => {
     }
   };
 
+  // const setLoginSession = () => {
+  //   sessionStorage.setItem('loggedIn', 'true');
+  // }
+
   const handlePopupClose = () => {
     setPopUp({ ...popUp, visible: false });
     if (popUp.type === 'success') {
       const role = localStorage.getItem('role');
-      const redirectPath = role === 'CUSTOMER' ? '/dashboard' : '/admin/restaurants';
+      const redirectPath = role === 'CUSTOMER' ? '' : '/admin/restaurants';
+      // setLoginSession();
       navigate(redirectPath);
       onClose();
     }

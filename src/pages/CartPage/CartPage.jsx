@@ -3,12 +3,18 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import './CartPage.css';
 import { useNavigate } from 'react-router-dom';
+import { FaTrash } from 'react-icons/fa';
+import { clearCartForUser, deleteItemFromCartForUser, fetchCartDataForUser, updateQuantityInCartForUser, validateCartAndCheckout } from '../../utils/api';
+import Toast from '../../components/Toast.jsx/Toast';
 
 const CartItemPage = () => {
     const [cart, setCart] = useState([]);
     const [error, setError] = useState(null);
     const { userId } = useSelector((state) => state.auth.user);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [showToast, setShowToast] = useState(false);
+    const [toastType, setToastType] = useState('success');
+    const [toastMessage, setToastMessage] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,12 +23,15 @@ const CartItemPage = () => {
 
     const fetchCartData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8083/api/cart/${userId}`);
-            setCart(response.data.cartItems);
-            calculateTotalPrice(response.data.cartItems);
+            const cartItems = await fetchCartDataForUser(userId);
+            setCart(cartItems);
+            calculateTotalPrice(cartItems);
         } catch (error) {
             console.error("Error fetching cart data", error);
             setError("Error fetching cart data");
+            setShowToast(true);
+            setToastType('error');
+            setToastMessage("Error fetching cart data");
         }
     };
 
@@ -30,13 +39,14 @@ const CartItemPage = () => {
     const handleIncreaseQuantity = async (cartId, currentQuantity) => {
         const newQuantity = currentQuantity + 1;
         try {
-            await axios.put(`http://localhost:8083/api/cart/${cartId}/update`, {
-                newQuantity: newQuantity
-            });
+            await updateQuantityInCartForUser(cartId, newQuantity, userId);
             // Update cart state after successful API call
             fetchCartData();
         } catch (error) {
             console.error('Error updating quantity', error);
+            setShowToast(true);
+            setToastType('error');
+            setToastMessage(error.response.data.message);
         }
     };
 
@@ -47,13 +57,14 @@ const CartItemPage = () => {
         } else {
             const newQuantity = currentQuantity - 1;
             try {
-                await axios.put(`http://localhost:8083/api/cart/${cartId}/update`, {
-                    newQuantity: newQuantity
-                });
+                await updateQuantityInCartForUser(cartId, newQuantity, userId);
                 // Update cart state after successful API call
                 fetchCartData();
             } catch (error) {
                 console.error('Error updating quantity', error);
+                setShowToast(true);
+                setToastType('error');
+                setToastMessage(error.response.data.message);
             }
         }
     };
@@ -61,37 +72,51 @@ const CartItemPage = () => {
     // Handle Delete Item
     const handleDeleteItem = async (cartId) => {
         try {
-            await axios.delete(`http://localhost:8083/api/cart/${userId}/delete/${cartId}`);
+            const res = await deleteItemFromCartForUser(cartId, userId);
             // Update cart state after successful API call
             fetchCartData();
+            setShowToast(true);
+            setToastType('success');
+            setToastMessage(res.data);
         } catch (error) {
             console.error('Error deleting item', error);
+            setShowToast(true);
+            setToastType('error');
+            setToastMessage(error.response.data.message);
         }
     };
 
     const handleClearCart = async () => {
         try {
-            await axios.delete(`http://localhost:8083/api/cart/clear/${userId}`);
+            const response =await clearCartForUser(userId);
             fetchCartData();
+            setShowToast(true);
+            setToastType('success');
+            setToastMessage(response.message);
         } catch (error) {
             console.error('Error clearing cart', error);
             setError(error.response.data.message);
+            setShowToast(true);
+            setToastType('error');
+            setToastMessage(error.response.data.message);
         }
     };
     const handleCheckout = async () => {
         try {
-            const response = await axios.post(`http://localhost:8083/api/cart/validate`, {
-                userId: userId,
-                totalPrice: totalPrice
-            });
-            console.log('Checkout successful', response.data);
+            const response = await validateCartAndCheckout(userId, totalPrice);
+            
             navigate('/checkout');
 
-
             // Handle post-checkout logic here, such as redirecting to a confirmation page
+            setShowToast(true);
+            setToastType('success');
+            setToastMessage(response.message);
         } catch (error) {
             console.error('Error during checkout', error);
             setError(error.response.data.message);
+            setShowToast(true);
+            setToastType('error');
+            setToastMessage(error.response.data.message);
             setTimeout(() => {
                 setError(null);
                 fetchCartData();
@@ -123,7 +148,7 @@ const CartItemPage = () => {
                                     onClick={() => handleDecreaseQuantity(item.cartId, item.quantity)}
                                     className={item.quantity === 1 ? "delete-button" : "decrease-button"}
                                 >
-                                    {item.quantity === 1 ? "Delete" : "-"}
+                                    {item.quantity === 1 ? <FaTrash/> : "-"}
                                 </button>
                                 <span>{item.quantity}</span>
                                 <button onClick={() => handleIncreaseQuantity(item.cartId, item.quantity)} className="increase-button">
@@ -151,6 +176,9 @@ const CartItemPage = () => {
                     <button onClick={handleCheckout} className="checkout-button">Checkout</button>
                 </div>
             </div>
+            {showToast && (
+                <Toast message={toastMessage} type={toastType} onClose={() => setShowToast(false)} />
+            )}
         </div>
     );
 };

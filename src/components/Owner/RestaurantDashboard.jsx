@@ -4,6 +4,9 @@ import RestaurantEditPopup from './RestaurantEditPopup';
 import axios from 'axios';
 import EditIcon from '../../assets/Edit-Linear-32px.svg';
 
+import defaultImage from '../../assets/restaurant_default.jpg';
+
+
 const RestaurantDashboard = ({ restaurant, setRestaurant, refreshData }) => {
     const [restaurantOpen, setRestaurantOpen] = useState(false);
     const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
@@ -60,11 +63,7 @@ const RestaurantDashboard = ({ restaurant, setRestaurant, refreshData }) => {
     return (
         <div className="restaurant-dashboard">
             <div className="restaurant-dashboard-banner">
-                {restaurant.imageUrl ? (
-                    <img src={`data:image/jpeg;base64,${restaurant.imageUrl}`} alt={restaurant.restaurantName} className="restaurant-dashboard-image" />
-                ) : (
-                    <div className="restaurant-dashboard-placeholder">Image Not Available</div>
-                )}
+                    <img src={restaurant.imageUrl ? `data:image/jpeg;base64,${restaurant.imageUrl}`: defaultImage} alt={restaurant.restaurantName} className="restaurant-dashboard-image" />
                 <div className="restaurant-dashboard-info">
                     <div>
                         <h1 className="restaurant-dashboard-name">

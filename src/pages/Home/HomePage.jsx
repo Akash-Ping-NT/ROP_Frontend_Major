@@ -4,16 +4,18 @@ import axios from 'axios';
 import RestaurantCard from '../../components/CardComponent/RestaurantCard';
 import './HomePage.css';
 import banner from '../../assets/banner.jpg'
+import { fetchAllRestaurants } from '../../utils/api';
+
 
 const HomePage = () => {
     const [restaurants, setRestaurants] = useState([]);
 
     const role = localStorage.getItem('role');
     useEffect(() => {
-        console.log('Fetching restaurant data');
-        axios.get('http://localhost:8081/api/restaurants/getAllRestaurant')
+        
+        fetchAllRestaurants()
             .then(response => {
-                setRestaurants(response.data);
+                setRestaurants(response);
             })
             .catch(error => {
                 console.error('Error fetching restaurant data:', error);

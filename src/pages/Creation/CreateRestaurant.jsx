@@ -9,7 +9,7 @@ const CreateRestaurantForm = () => {
     const [contactInformation, setContactInformation] = useState('');
     const [openingHours, setOpeningHours] = useState('');
     const [image, setImage] = useState(null); 
-    const [error, setError] = useState('');
+    const [error, setError] = useState({});
     const [description, setDescription] = useState('');
 
     const navigate = useNavigate(); 
@@ -51,13 +51,13 @@ const CreateRestaurantForm = () => {
         } catch (error) {
             setError('An error occurred while creating the restaurant');
             console.error('Error creating restaurant:', error);
+            setError(error.response.data);
         }
     };
     
     return (
         <div className="create-restaurant-container">
             <h2>Create Restaurant</h2>
-            {error && <div className="error">{error}</div>}
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>
@@ -67,9 +67,9 @@ const CreateRestaurantForm = () => {
                             type="text"
                             value={restaurantName}
                             onChange={(e) => setRestaurantName(e.target.value)}
-                            required
                         />
                 </div>
+                {error.restaurantName && <p className="error">{error.restaurantName}</p>}
                 <div>
                     <label>
                         Description:
@@ -77,10 +77,10 @@ const CreateRestaurantForm = () => {
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            required
                             rows={5}
                         />
                 </div>
+                {error.description && <p className="error">{error.description}</p>}
                 <div>
                     <label>
                         Address:
@@ -89,9 +89,9 @@ const CreateRestaurantForm = () => {
                             type="text"
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
-                            required
                         />
                 </div>
+                {error.address && <p className="error">{error.address}</p>}
                 <div>
                     <label>
                         Contact Information:
@@ -100,9 +100,9 @@ const CreateRestaurantForm = () => {
                             type="text"
                             value={contactInformation}
                             onChange={(e) => setContactInformation(e.target.value)}
-                            required
                         />
                 </div>
+                {error.contactInformation && <p className="error">{error.contactInformation}</p>}
                 
                 <div>
                     <label>
@@ -113,9 +113,9 @@ const CreateRestaurantForm = () => {
                             value={openingHours}
                             placeholder='09:00 AM - 11:00 PM'
                             onChange={(e) => setOpeningHours(e.target.value)}
-                            required
                         />
                 </div>
+                    {error.openingHours && <p className="error">{error.openingHours}</p>}
                 <div>
                     <label>
                         Upload Image:

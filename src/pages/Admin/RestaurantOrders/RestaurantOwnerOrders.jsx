@@ -36,7 +36,7 @@ useEffect(() => {
   if (restaurant && restaurant.id) {
     const fetchOrders = async () => {
         try {
-            const response = await fetch(`http://localhost:8083/api/orders/restaurant/${restaurant.id}`);
+            const response = await fetch(`http://localhost:8083/api/orders/restaurant/?restaurantId=${restaurant.id}`);
             if (response.ok) {
                 const data = await response.json();
                 setOrdersData(data); // Store the fetched data in state

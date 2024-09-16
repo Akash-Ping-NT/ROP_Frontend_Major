@@ -32,7 +32,8 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: auto;
+    /* width: auto; */
+    width: -webkit-fill-available;
 }
 
 .modal-content .modal-actions {

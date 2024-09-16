@@ -1,0 +1,93 @@
+/* Container for price and add-to-cart/quantity controls */
+.menu-item-price-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* Price container */
+.menu-item-price {
+    font-size: 18px;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.menu-item-price-prefix {
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+.menu-item-price-value {
+    font-weight: bold;
+}
+
+/* Add to Cart button */
+.add-to-cart-button {
+    background-color: #28a745;  /* Green for consistency */
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart-button:hover {
+    background-color: #218838;
+}
+
+.add-to-cart-button.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Quantity controls */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+}
+
+/* Same quantity control styles as before */
+.quantity-display {
+    font-size: 16px;
+    margin: 0 10px;
+    padding: 5px;
+    width: 40px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.decrease-quantity-button {
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.decrease-quantity-button:hover {
+    background-color: #ff4b41;
+}
+
+.increase-quantity-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.increase-quantity-button:hover {
+    background-color: #218838;
+}

@@ -2,34 +2,41 @@ import React, { useState } from 'react';
 import './RestaurantOrders.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { cancelOrderByOrderId, updateOrderStatus } from '../../utils/api';
+import Toast from '../Toast.jsx/Toast';
 
 const RestaurantOrders = ({ orderData }) => {
+   
     const [status, setStatus] = useState(orderData.status);
     const userId = useSelector((state) => state.auth.user.userId);
+    const [showToast, setShowToast] = useState(false);
+    const [toastType, setToastType] = useState('success');
+    const [toastMessage, setToastMessage] = useState('');
 
     const handleStatusChange = async (newStatus) => {
         setStatus(newStatus);
         try {
-            await axios.put(`http://localhost:8083/api/orders/${orderData.id}/status`, { userId,newStatus: newStatus });
-            console.log(`Order status updated to ${newStatus}`);
+            const response = await updateOrderStatus(orderData.id, newStatus, userId);
+            
         } catch (error) {
             console.error('Error updating order status', error);
         }
     };
 
     const handleCancelOrder = async (orderId) => {
-            try {
-                const response = await axios.put(`http://localhost:8083/api/orders/cancel/${orderId}?userId=${userId}`);
-                if (response.status === 200) {
-                    setStatus("CANCELLED");
-                    alert('Order cancelled successfully');
-                } else {
-                    console.error('Failed to cancel order');
-                }
-            } catch (error) {
-                console.error('Error cancelling order:', error);
-                alert(`Error cancelling order: ${error.response.data.message}`);
-            }
+        const response = await cancelOrderByOrderId(orderId, userId);
+        if (response.success) {
+            setStatus("CANCELLED");
+            setShowToast(true);
+            setToastType('success');
+            setToastMessage(response?.message);
+
+        } else {
+            console.error('Error cancelling order:', response.error);
+            setShowToast(true);
+            setToastType('error');
+            setToastMessage(response.error);
+        }
     };
 
     return (
@@ -82,6 +89,7 @@ const RestaurantOrders = ({ orderData }) => {
                     <p className="completed-message">Order Completed</p>
                 )}
             </div>
+            {showToast && ( <Toast type={toastType} message={toastMessage} onClose={() => setShowToast(false)} />)}
         </div>
     );
 };
