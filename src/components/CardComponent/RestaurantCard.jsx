@@ -2,6 +2,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './RestaurantCard.css';
+import defaultImage from '../../assets/restaurant_default.jpg';
+
 
 const RestaurantCard = ({ id, name, status, imageUrl, openingHours, description }) => {
     return (
@@ -9,7 +11,7 @@ const RestaurantCard = ({ id, name, status, imageUrl, openingHours, description 
             <div className={`restaurant-card ${status === 'Open' ? 'open-card' : 'closed-card'}`}>
                 <div className="restaurant-image-container">
                     <img
-                        src={`data:image/jpeg;base64,${imageUrl}`}
+                        src={imageUrl ? `data:image/jpeg;base64,${imageUrl}`: defaultImage}
                         alt={name}
                         className="restaurant-image"
                     />

@@ -89,7 +89,7 @@ const UserAddress = () => {
 
 
   useEffect(() => {
-    console.log(addresses)
+    
   },[addresses])
   const handleSaveAddress = () => {
     if (!validateForm()) {

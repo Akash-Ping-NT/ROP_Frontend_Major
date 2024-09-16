@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './RestaurantPage.css';
+import Toast from '../../components/Toast.jsx/Toast';
 import MenuItemCard from '../../components/CardComponent/MenuItemCard';
 import CategoryDropdowns from '../../components/DropdownCategory/CategoryDropdowns';
+import AuthModal from '../../components/AuthModal/AuthModal';
+import defaultImage from '../../assets/restaurant_default.jpg';
+
 
 
 const RestaurantPage = () => {
@@ -14,14 +18,18 @@ const RestaurantPage = () => {
     const [error, setError] = useState(null);
     const [cart, setCart] = useState([]);
     const userId = localStorage.getItem('userId');
+    const [showToast, setShowToast] = useState(false);
+    const [toastType, setToastType] = useState('success');
+    const [toastMessage, setToastMessage] = useState('');
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         const fetchRestaurantAndMenu = async () => {
             try {
-                const restaurantResponse = await axios.get(`http://localhost:8081/api/restaurants/getRestaurant/${id}`);
+                const restaurantResponse = await axios.get(`http://localhost:8081/api/restaurants/getRestaurant/?id=${id}`);
                 setRestaurant(restaurantResponse.data);
 
-                const menuResponse = await axios.get(`http://localhost:8081/api/menuItems/menuItemsByRestaurant/${id}`);
+                const menuResponse = await axios.get(`http://localhost:8081/api/menuItems/${id}/menuItemsByRestaurant`);
                 setMenuItems(menuResponse.data);
 
                 setLoading(false);
@@ -33,28 +41,26 @@ const RestaurantPage = () => {
         };
 
         fetchRestaurantAndMenu();
-        if(userId) {
+        if (userId) {
             fetchCartData();
         }
     }, [id]);
 
-
     const fetchCartData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8083/api/cart/${userId}`);
+            const response = await axios.get(`http://localhost:8083/api/cart/${userId}/userCart`);
             setCart(response.data);
-            console.log("Cart data fetched successfully", response.data);
+            
         } catch (error) {
             console.error("Error fetching cart data", error);
             setError("Error fetching cart data");
         }
     };
 
-
     const handleAddToCart = async (foodItemId) => {
         try {
-            if(!userId) {   
-                alert('Please login to add items to cart');
+            if (!userId) {
+                setIsOpen(true);
                 return;
             }
             const cartData = {
@@ -65,11 +71,37 @@ const RestaurantPage = () => {
             };
 
             const response = await axios.post('http://localhost:8083/api/cart/add', cartData);
-            fetchCartData()
-            alert('Item added to cart!');
+            fetchCartData();
+            setShowToast(true);
+            setToastType('success');
+            setToastMessage(response.data.message);
         } catch (error) {
             console.error('Error adding item to cart', error);
-            alert(`Error placing order: ${error.response.data.message}`);
+            setShowToast(true);
+            setToastType('error');
+            setToastMessage(error.response.data.message);
+        }
+    };
+
+    // Function to update the cart (increase, decrease quantity, or delete if quantity = 0)
+    const onUpdateCart = async (cartId, newQuantity) => {
+        try {
+            if (newQuantity === 0) {
+                await axios.delete(`http://localhost:8083/api/cart/${userId}/delete/${cartId}`);
+                setShowToast(true);
+                setToastType('success');
+                setToastMessage('Item removed from cart');
+            } else {
+                await axios.put(`http://localhost:8083/api/cart/${cartId}/update`, {
+                    newQuantity: newQuantity
+                });
+            }
+            fetchCartData();
+        } catch (error) {
+            console.error('Error updating cart', error);
+            setShowToast(true);
+            setToastType('error');
+            setToastMessage('Error updating cart');
         }
     };
 
@@ -86,7 +118,7 @@ const RestaurantPage = () => {
             {restaurant && (
                 <div className="restaurant-banner">
                     <img 
-                        src={`data:image/jpeg;base64,${restaurant.imageUrl}`} 
+                        src={restaurant.imageUrl ? `data:image/jpeg;base64,${restaurant.imageUrl}` : defaultImage} 
                         alt={restaurant.restaurantName} 
                         className="restaurant-banner-image" 
                     />
@@ -96,16 +128,12 @@ const RestaurantPage = () => {
                         <p className="restaurant-hours">Opening Hours: {restaurant.openingHours}</p>
                         <p className='restaurant-address'>{restaurant.address}</p>
                         <p className='restaurant-contact'>{restaurant.contactNo}</p>
-                        
-                        {/* <p className={`restaurant-status ${restaurant.open ? 'open' : 'closed'}`}>
-                            {restaurant.open ? 'Open' : 'Closed'}
-                        </p> */}
                     </div>
                 </div>
             )}
 
-          {/* Menu Items Section */}
-          <header className="restaurant-header-page">
+            {/* Menu Items Section */}
+            <header className="restaurant-header-page">
                 <h2>Menu Items</h2>
                 {/* Category Dropdown aligned to the right */}
                 <CategoryDropdowns restaurantId={id} onCategorySelect={handleCategorySelect} />
@@ -113,9 +141,17 @@ const RestaurantPage = () => {
 
             <div className="menu-items-container">
                 {menuItems?.map(item => (
-                   <MenuItemCard key={item.id} menuItem={item} cartItems={cart?.cartItems} onAddToCart={handleAddToCart} />
+                   <MenuItemCard 
+                       key={item.id} 
+                       menuItem={item} 
+                       cartItems={cart?.cartItems} 
+                       onAddToCart={handleAddToCart} 
+                       onUpdateCart={onUpdateCart}  // Pass the update function
+                   />
                 ))}
             </div>
+            <AuthModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+            {showToast && (<Toast type={toastType} message={toastMessage} onClose={() => setShowToast(false)}  />)}
         </div>
     );
 };

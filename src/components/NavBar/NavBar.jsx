@@ -31,6 +31,7 @@ const NavBar = () => {
         localStorage.clear();
         setLoggedIn(false)
         navigate('/',{replace:true})
+        // CacheStorage.clear();
         // window.location.reload(true);
         // Window.location.href('/');
     }
@@ -57,6 +58,15 @@ const NavBar = () => {
                         <span>Dashboard</span>
                     </Link>
                     }
+                    {loggedIn && role === 'RESTAURANT_OWNER' && 
+                    // !location.pathname.startsWith('/dashboard') && 
+                    
+                     <Link to="/admin/restaurants" className="navbar-link">
+                        <FaUniversalAccess className="navbar-icon" />
+                        <span>Dashboard</span>
+                    </Link>
+                    }
+                    
                     <Link to="/contact" className="navbar-link">
                         <AiOutlineMail className="navbar-icon" />
                         <span>Contact</span>

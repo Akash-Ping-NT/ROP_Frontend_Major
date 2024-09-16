@@ -22,7 +22,7 @@ const Checkout = () => {
 
     const fetchCartData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8083/api/cart/${userId}`);
+            const response = await axios.get(`http://localhost:8083/api/cart/${userId}/userCart`);
             setCart(response.data.cartItems);
             setRestaurantId(response.data.restaurantId);
             calculateTotalPrice(response.data.cartItems);

@@ -3,39 +3,58 @@ import axios from 'axios';
 import './RestaurantOrders.css'; // Import the CSS file
 import { useSelector } from 'react-redux';
 import Sidebar from '../../components/Sidebar/Sidebar';
+import { cancelOrderByOrderId, fetchOrdersForUser } from '../../utils/api';
+import Toast from '../../components/Toast.jsx/Toast';
 
 const RestaurantOrders = () => {
     const [orders, setOrders] = useState([]);
     const userId = useSelector(state => state.auth.user.userId); // Replace with dynamic userId if needed
 
-    const fetchOrders = async () => {
-        try {
-            const response = await axios.get(`http://localhost:8083/api/orders/user/${userId}`);
-            setOrders(response.data);
-        } catch (error) {
-            console.error('Error fetching user orders:', error);
-        }
-    };
+    const [showToast, setShowToast] = useState(false);
+    const [toastType, setToastType] = useState('success');
+    const [toastMessage, setToastMessage] = useState('');
+
+
+const fetchOrders = async () => {
+    try {
+        const data = await fetchOrdersForUser(userId);
+        setOrders(data);
+    } catch (error) {
+        console.error('Error fetching user orders:', error);
+    }
+};
 
     useEffect(() => {
         fetchOrders();
     }, [userId]);
 
+    // const cancelOrder = async (orderId) => {
+    //     const { success, error } = await cancelOrder(orderId, userId);
+    //     if (success) {
+    //         alert('Order cancelled successfully');
+    //         setOrders(orders.map(order => order.orderId === orderId ? { ...order, status: 'CANCELLED' } : order));
+    //         fetchOrders();
+    //     } else {
+    //         console.error('Error cancelling order:', error);
+    //         alert(`Error cancelling order: ${error}`);
+    //         fetchOrders();
+    //     }
+    // };
+
     const cancelOrder = async (orderId) => {
-        try {
-            const response = await axios.put(`http://localhost:8083/api/orders/cancel/${orderId}?userId=${userId}`);
-            if (response.status === 200) {
-                alert('Order cancelled successfully');
-                setOrders(orders.map(order => order.orderId === orderId ? { ...order, status: 'CANCELLED' } : order));
-                fetchOrders();
-            } else {
-                console.error('Failed to cancel order');
-            }
-        } catch (error) {
-            console.error('Error cancelling order:', error);
-            alert(`Error cancelling order: ${error.response.data.message}`);
+        const response = await cancelOrderByOrderId(orderId, userId);
+        if (response.success) {
+            setShowToast(true);
+            setToastType('success');
+            setToastMessage(response?.message);
+            setOrders(orders.map(order => order.orderId === orderId ? { ...order, status: 'CANCELLED' } : order));
             fetchOrders();
-            
+        } else {
+            console.error('Error cancelling order:', response.error);
+            setShowToast(true);
+            setToastType('error');
+            setToastMessage(response.error);
+            fetchOrders();
         }
     };
 
@@ -114,6 +133,9 @@ const RestaurantOrders = () => {
             )}
         </div>
       </div>
+      {showToast && (
+        <Toast type={toastType} message={toastMessage} onClose={() => setShowToast(false)} />
+      )}
     </div>
     );
 };

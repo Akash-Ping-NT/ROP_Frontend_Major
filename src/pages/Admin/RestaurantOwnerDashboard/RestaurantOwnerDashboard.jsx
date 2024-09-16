@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { getRestaurantByUserId } from '../../../utils/api';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import restaurantimage from '../../../assets/restaurant_default.jpg';
+import Toast from '../../../components/Toast.jsx/Toast';
 
 const RestaurantAdmin = () => {
 
@@ -17,13 +19,18 @@ const RestaurantAdmin = () => {
     const [contactInformation, setContactInformation] = useState('');
     const [openingHours, setOpeningHours] = useState('');
     const user = useSelector((state) => state.auth.user);
+    const [error, setError] = useState({});
+    const [showToast, setShowToast] = useState(false);
+    const [toastType, setToastType] = useState('success');
+    const [toastMessage, setToastMessage] = useState('');
+
 
   const navigate = useNavigate();
 
   const fetchRestaurantData = async () => {
     try {
         getRestaurantByUserId(userId).then((data) => {
-            console.log("Heree")
+            
             setRestaurants(data);
         }).catch((error) => {
             console.error('Error fetching restaurant data:', error);
@@ -46,6 +53,7 @@ const RestaurantAdmin = () => {
 
   const closePopup = () => {
     setIsPopupOpen(false);
+    setError({});
   };
 
 
@@ -57,7 +65,7 @@ const RestaurantAdmin = () => {
 const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('submitting form')
+    
     
     const formData = new FormData();
     formData.append('restaurantInDTO', new Blob([JSON.stringify({
@@ -74,11 +82,16 @@ const handleSubmit = async (e) => {
     }
 
     try {
-        await axios.post('http://localhost:8081/api/restaurants/addRestaurant', formData, {
+        const response =await axios.post('http://localhost:8081/api/restaurants/addRestaurant', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         });
+        console.log(response);
+        setShowToast(true);
+        setToastMessage(response.data.message);
+        setToastType('success');
+       
 
         setAddress('');
         setContactInformation('');
@@ -92,6 +105,7 @@ const handleSubmit = async (e) => {
         
     } catch (error) {
         console.error('Error creating restaurant:', error);
+        setError(error.response.data);
     }
 
     
@@ -109,7 +123,7 @@ const handleSubmit = async (e) => {
       <div className="restaurant-cards">
         {restaurants?.map((restaurant) => (
           <div onClick={() => navigate(`/admin/restaurants/${restaurant.id}/dashboard`)} key={restaurant.id} className="restaurant-card">
-            <img src={`data:image/jpeg;base64,${restaurant.imageUrl}`} alt={restaurant.name} />
+            <img src={restaurant.imageUrl ? `data:image/jpeg;base64,${restaurant.imageUrl}` : restaurantimage} alt={"No image available"} />
             <h3 className="restaurant-name">{restaurant.restaurantName}</h3>
             <p className="restaurant-description">{restaurant.description}</p>
             <p  className="restaurant-address">{restaurant.address}</p>
@@ -128,23 +142,33 @@ const handleSubmit = async (e) => {
               {/* Add form fields for adding a new restaurant here */}
               <input type="text" value={restaurantName}
                             onChange={(e) => setRestaurantName(e.target.value)} placeholder="Restaurant Name" required />
+                            {error?.restaurantName && <p className="error">{error.restaurantName}</p>}
               <input type="text" value={description}
                             onChange={(e) => setDescription(e.target.value)} placeholder="Description" required />
+                            {error?.description && <p className="error">{error.description}</p>}
               <input type="text" value={address}
                             onChange={(e) => setAddress(e.target.value)} placeholder="Address" required />
+                            {error?.address && <p className="error">{error.address}</p>}
               <input type="text" value={contactInformation} onChange={(e) => setContactInformation(e.target.value)} placeholder="Contact Information" required />
+              {error?.contactInformation && <p className="error">{error.contactInformation}</p>}
               <input type="text" value={openingHours} onChange={(e) => setOpeningHours(e.target.value)} placeholder="Opening Hours" required />
+              {error?.openingHours && <p className="error">{error.openingHours}</p>}
               <input type="file" onChange={handleImageChange} placeholder="Upload Restaurant Image" required />
-
+              {error?.image && <p className="error">{error.image}</p>}
               <button className='submit' onClick={handleSubmit}>Submit</button>
               <button type="button" onClick={closePopup}>
                 Close
               </button>
             </form>
           </div>
+          
         </div>
       )}
+    {
+          showToast && <Toast message={toastMessage} type={toastType} onClose={() => setShowToast(false)} />
+        }
     </div>
+    
   );
 };
 

@@ -11,7 +11,7 @@ const CategoryDropdown = ({ restaurantId, onCategorySelect }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`http://localhost:8081/api/categories/getAllCategory/${restaurantId}`);
+        const response = await axios.get(`http://localhost:8081/api/categories/${restaurantId}/listAllCategory`);
         setCategories(response.data);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -27,7 +27,7 @@ const CategoryDropdown = ({ restaurantId, onCategorySelect }) => {
 
     if (categoryId === 'all') {
       // Fetch all menu items if "All" is selected
-      const menuResponse = await axios.get(`http://localhost:8081/api/menuItems/menuItemsByRestaurant/${restaurantId}`);
+      const menuResponse = await axios.get(`http://localhost:8081/api/menuItems/${restaurantId}/menuItemsByRestaurant`);
       onCategorySelect(menuResponse.data);
     } else {
       // Fetch menu items by selected category

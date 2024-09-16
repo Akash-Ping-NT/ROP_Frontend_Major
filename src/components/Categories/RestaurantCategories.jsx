@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './RestaurantCategories.css'; // Import CSS for styling
 import Toast from '../Toast.jsx/Toast';
+import { createCategory, deleteCategoryAPI, updateCategory } from '../../utils/api';
 
 const RestaurantCategories = ({ restaurant }) => {
     const [categories, setCategories] = useState([]);
@@ -16,14 +17,14 @@ const RestaurantCategories = ({ restaurant }) => {
         
 
         if (restaurant && restaurant?.id) {
-            console.log(restaurant)
+            
             fetchCategories();
         }
     }, [restaurant]);
 
     const fetchCategories = async () => {
         try {
-            const response = await fetch(`http://localhost:8081/api/categories/getAllCategory/${restaurant.id}`);
+            const response = await fetch(`http://localhost:8081/api/categories/${restaurant.id}/listAllCategory`);
             const data = await response.json();
             setCategories(data);
         } catch (error) {
@@ -35,31 +36,18 @@ const RestaurantCategories = ({ restaurant }) => {
         if (newCategory.trim() === '') return;
 
         try {
-            const response = await fetch(`http://localhost:8081/api/categories/addCategory`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name: newCategory, restaurantId: restaurant.id }),
-            });
+            const res = await createCategory(newCategory, restaurant.id);
+            setToastMessage(res.message);
+            setToastType('success');
+            setShowToast(true);
 
-            if (response.status === 201) {
-                const res= await response.json();
-                setToastMessage(res.message);
-                setToastType('success');
-                setShowToast(true);
-
-                fetchCategories();
-                setNewCategory(''); // Clear the input field after adding
-            } else {
-                console.error('Failed to add category');
-                alert('Failed to add category');
-            }
+            fetchCategories();
+            setNewCategory(''); // Clear the input field after adding
         } catch (error) {
             console.error('Error adding category:', error);
-            // alert(error.response.data.message);
-            alert('Failed to add category');
-            
+            setToastMessage(error.message);
+            setToastType('error');
+            setShowToast(true);
         }
     };
 
@@ -77,57 +65,34 @@ const RestaurantCategories = ({ restaurant }) => {
         if (editingName.trim() === '') return;
 
         try {
-            const response = await fetch(`http://localhost:8081/api/categories/${category.id}/update/category`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name: editingName }),
-            });
-
-            if (response.status === 200) {
-                const res = await response.json();
-                setToastMessage(res.message);
-                setToastType('success');
-                setShowToast(true);
-                
-                fetchCategories();
-                cancelEditing();
-            } else {
-                console.error('Failed to update category');
-                const res = await response.json();
-                setToastMessage(res.message);
-                setToastType('error');
-                setShowToast(true);
-            }
+            const res = await updateCategory(category.id, editingName);
+            setToastMessage(res.message);
+            setToastType('success');
+            setShowToast(true);
+            
+            fetchCategories();
+            cancelEditing();
         } catch (error) {
             console.error('Error updating category:', error);
-            alert(error.response.data.message);
+            setToastMessage(error.message);
+            setToastType('error');
+            setShowToast(true);
         }
     };
 
     const deleteCategory = async (categoryId) => {
         try {
-            const response = await fetch(`http://localhost:8081/api/categories/${categoryId}/deleteCategory`, {
-                method: 'DELETE',
-            });
+            const res = await deleteCategoryAPI(categoryId);
+            setToastMessage(res.message);
+            setToastType('success');
+            setShowToast(true);
+            fetchCategories();
 
-            if (response.status === 200) {
-                const res = await response.json();
-                setToastMessage(res.message);
-                setToastType('success');
-                setShowToast(true);
-                fetchCategories();
-
-            } else {
-                console.error('Failed to delete category');
-                const res = await response.json();
-                setToastMessage(res.message);
-                setToastType('error');
-                setShowToast(true);
-            }
         } catch (error) {
             console.error('Error deleting category:', error);
+            setToastMessage(error.message);
+            setToastType('error');
+            setShowToast(true);
         }
     };
 

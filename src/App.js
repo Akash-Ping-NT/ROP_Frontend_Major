@@ -19,8 +19,27 @@ import Checkout from './pages/Checkout/Checkout';
 import RestaurantOrders from './pages/Orders/RestaurantOrders';
 import Unauthorized from './components/Common/Unauthorized';
 import PrivateRoute from './components/Common/PrivateRoute';
+import { useState } from 'react';
 
 function App() {
+
+  // function isLoggedIn() {
+  //   return sessionStorage.getItem('loggedIn') === 'true';
+  // }
+  
+  // // Function to show the login first notification
+  // function showLoginFirstNotification() {
+  //   window.location.href = "/";  // Redirect to the login page
+  // }
+  
+  // // Handle the popstate event (back navigation)
+  // window.addEventListener('popstate', function(event) {
+  //   if (!isLoggedIn()) {
+  //       event.preventDefault();
+  //       showLoginFirstNotification();
+  //   }
+  // });
+
   return (
     <Router>
       <NavBar />

@@ -8,12 +8,12 @@ const AuthModal = ({ isOpen, onClose }) => {
   const [isSignIn, setIsSignIn] = useState(true);
 
   const handleSignIn = (user) => {
-    console.log('Sign In Successful', user);
+    
     onClose();
   };
 
   const handleSignUp = (user) => {
-    console.log('Sign Up Successful', user);
+    
     onClose();
   };
 

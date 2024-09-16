@@ -116,11 +116,11 @@ const UpdateProfileForm = ({ profile, onClose, onSave}) => {
 
   const handleUpdate = () => {
     updateUserProfile(userData.userId, { firstName, lastName, contactNumber, email }).then(() => {
-      console.log('Profile updated successfullyefsdsf');
+      
       onSave();
     }).catch((error) => {
       // console.error('Error updating profile:', error);
-      console.log(error.response.data);
+      
       setMessage(error.response.data);
     });
   };
@@ -131,39 +131,39 @@ const UpdateProfileForm = ({ profile, onClose, onSave}) => {
     <form  onSubmit={handleSubmit}>
       <label>
         First Name
-        <input
+      </label>
+      <input
           type="text"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
         />
-      </label>
       {message.firstName && <p className="error">{message?.firstName}</p>}
       <label>
         Last Name
-        <input
+      </label>
+      <input
           type="text"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
         />
-      </label>
       {message.lastName && <p className="error">{message?.lastName}</p>}
       <label>
         Contact Number
-        <input
+      </label>
+      <input
           type="tel"
           value={contactNumber}
           onChange={(e) => setContactNumber(e.target.value)}
         />
-      </label>
       {message.contactNumber && <p className="error">{message?.contactNumber}</p>}
       <label>
         Email
-        <input
+      </label>
+      <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-      </label>
       {message.email && <p className="error">{message?.email}</p>}
       <div className='modal-actions'>
       <button className='success-button' onClick={handleUpdate}>Update Profile</button>

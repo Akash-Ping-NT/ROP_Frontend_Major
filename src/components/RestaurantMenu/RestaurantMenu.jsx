@@ -22,9 +22,10 @@ const RestaurantMenu = ({ restaurant }) => {
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [toastType, setToastType] = useState('success');
+    const [error, setError] = useState({});
 
     useEffect(() => {
-        console.log(showToast);
+        
     }, [showToast]);
 
     useEffect(() => {
@@ -36,11 +37,12 @@ const RestaurantMenu = ({ restaurant }) => {
 
     const fetchMenuItems = async () => {
         try {
-            const response = await fetch(`http://localhost:8081/api/menuItems/menuItemsByRestaurant/${restaurant.id}`);
+            const response = await fetch(`http://localhost:8081/api/menuItems/${restaurant.id}/menuItemsByRestaurant`);
             const data = await response.json();
             setMenuItems(data);
         } catch (error) {
             console.error('Error fetching menu items:', error);
+            setError(error.response.data);
         }
     };
 
@@ -69,6 +71,7 @@ const RestaurantMenu = ({ restaurant }) => {
             isAvailable: false,
             imageUrl: null,
         });
+        setError({});
     };
 
     const addOrUpdateMenuItem = async () => {
@@ -124,12 +127,15 @@ const RestaurantMenu = ({ restaurant }) => {
                         'Content-Type': 'multipart/form-data'
                     }
                 });
+                console.log(response)
                 if(response.status === 201) {
                     setToastMessage(response.data.message);
                     setToastType('success');
                     setShowToast(true);
                     fetchMenuItems();
                     closeModal();
+                }else if (response.status === 500) {
+                    setError({message:'Image Cannot be empty'})
                 }else{
                     console.error('Failed to save menu item');
                     setToastMessage(response.data.message);
@@ -138,11 +144,15 @@ const RestaurantMenu = ({ restaurant }) => {
                 }
             }
         } catch (error) {
-            console.error('Error saving menu item:xvc', error);
+            console.error('Error saving menu item:', error);
+            if(error.status === 500) {
+                setError({message:'Image Cannot be empty'})
+            }else{
+
+                setError(error.response.data);
+            }
             const errorMessage = error.response?.data?.message || 'Invalid or Empty Input';
-            setToastMessage(errorMessage);
-            setToastType('error');
-            setShowToast(true);
+    
             // setPopUp({ visible: true, message: errorMessage, type: 'error', redirect: '' });
 
         }
@@ -164,7 +174,7 @@ const RestaurantMenu = ({ restaurant }) => {
 
     const deleteMenuItem = async (menuItemId) => {
         try {
-            const response = await fetch(`http://localhost:8081/api/menuItems/deleteMenuItem/${menuItemId}`, {
+            const response = await fetch(`http://localhost:8081/api/menuItems/deleteMenuItem/?id=${menuItemId}`, {
                 method: 'DELETE',
             });
 
@@ -190,7 +200,7 @@ const RestaurantMenu = ({ restaurant }) => {
             const response = await fetch(`http://localhost:8081/api/menuItems/menuItem/${menuItem.id}/status`, {
                 method: 'PUT',
             });
-            console.log(response);
+            
             if (response.status === 200) {
                 const res = await response.json();
                 setToastMessage(res.message);
@@ -249,6 +259,7 @@ const RestaurantMenu = ({ restaurant }) => {
                 handleChange={handleChange}
                 handleFileChange={handleFileChange}
                 restaurantId={restaurant?.id}
+                error={error}
             />
             
         </div>
