@@ -6,8 +6,7 @@ import Toast from '../Toast.jsx/Toast';
 
 const UserAddress = () => {
   const [addresses, setAddresses] = useState([
-    { id: 1, city: 'New York', country: 'USA', postalCode: '10001', state: 'NY', street: '123 5th Ave' },
-    { id: 2, city: 'London', country: 'UK', postalCode: 'EC1A 1BB', state: 'London', street: '456 Oxford St' }
+    
   ]);
 
   const [showPopup, setShowPopup] = useState(false);
@@ -28,7 +27,12 @@ const UserAddress = () => {
   const [toastType, setToastType] = useState('success');
 
   useEffect(() => {
-    getAllAddress(userId).then(addresses => setAddresses(addresses));
+    getAllAddress(userId).then(addresses => setAddresses(addresses)).catch(error =>{
+      console.error('Error fetching addresses:', error);
+      setToastMessage('Error fetching addresses');
+      setToastType('error');
+      setShowToast(true);
+    });
   }, []);
 
 

@@ -50,7 +50,7 @@ const CreateRestaurantForm = () => {
             navigate('/admin/restaurants');
         } catch (error) {
             setError('An error occurred while creating the restaurant');
-            console.error('Error creating restaurant:', error);
+            console.error('Error creating restaurant:dsfgds', error);
             setError(error.response.data);
         }
     };
@@ -69,7 +69,7 @@ const CreateRestaurantForm = () => {
                             onChange={(e) => setRestaurantName(e.target.value)}
                         />
                 </div>
-                {error.restaurantName && <p className="error">{error.restaurantName}</p>}
+                {error?.restaurantName && <p className="error">{error.restaurantName}</p>}
                 <div>
                     <label>
                         Description:
@@ -80,7 +80,7 @@ const CreateRestaurantForm = () => {
                             rows={5}
                         />
                 </div>
-                {error.description && <p className="error">{error.description}</p>}
+                {error?.description && <p className="error">{error.description}</p>}
                 <div>
                     <label>
                         Address:
@@ -91,7 +91,7 @@ const CreateRestaurantForm = () => {
                             onChange={(e) => setAddress(e.target.value)}
                         />
                 </div>
-                {error.address && <p className="error">{error.address}</p>}
+                {error?.address && <p className="error">{error.address}</p>}
                 <div>
                     <label>
                         Contact Information:
@@ -102,7 +102,7 @@ const CreateRestaurantForm = () => {
                             onChange={(e) => setContactInformation(e.target.value)}
                         />
                 </div>
-                {error.contactInformation && <p className="error">{error.contactInformation}</p>}
+                {error?.contactInformation && <p className="error">{error.contactInformation}</p>}
                 
                 <div>
                     <label>
@@ -115,7 +115,7 @@ const CreateRestaurantForm = () => {
                             onChange={(e) => setOpeningHours(e.target.value)}
                         />
                 </div>
-                    {error.openingHours && <p className="error">{error.openingHours}</p>}
+                    {error?.openingHours && <p className="error">{error.openingHours}</p>}
                 <div>
                     <label>
                         Upload Image:
@@ -126,6 +126,7 @@ const CreateRestaurantForm = () => {
                             onChange={handleImageChange}
                         />
                 </div>
+                {error?.message && <p className="error">{error.message}</p>}
                 <button type="submit">Create Restaurant</button>
             </form>
         </div>

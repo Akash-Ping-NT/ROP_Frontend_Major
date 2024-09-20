@@ -32,7 +32,7 @@ const NavBar = () => {
         setLoggedIn(false)
         navigate('/',{replace:true})
         // CacheStorage.clear();
-        // window.location.reload(true);
+        window.location.reload(true);
         // Window.location.href('/');
     }
 

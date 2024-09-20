@@ -4,6 +4,7 @@ import axios from 'axios';
 import './Checkout.css';
 import { getAllAddress } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
+import Toast from '../../components/Toast.jsx/Toast';
 
 const Checkout = () => {
     const [cart, setCart] = useState([]);
@@ -13,6 +14,9 @@ const Checkout = () => {
     const [orderPlaced, setOrderPlaced] = useState(false);
     const { userId } = useSelector((state) => state.auth.user);
     const [restaurantId, setRestaurantId] = useState(null);
+    const [showToast, setShowToast] = useState(false);
+    const [toastType, setToastType] = useState('success');
+    const [toastMessage, setToastMessage] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -43,7 +47,9 @@ const Checkout = () => {
 
     const handlePlaceOrder = async () => {
         if (!selectedAddress) {
-            alert("Please select an address to place the order.");
+            setToastMessage('Please select an address');
+            setToastType('error');
+            setShowToast(true);
             return;
         }
 
@@ -62,7 +68,9 @@ const Checkout = () => {
             },5000)
         } catch (error) {
             console.error('Error placing order');
-            alert(`Error placing order: ${error.response.data.cartIds}`);
+            setToastMessage(error.response.data.message);
+            setToastType('error');
+            setShowToast(true);
         }
     };
 
@@ -120,6 +128,9 @@ const Checkout = () => {
             <button onClick={handlePlaceOrder} className="place-order-button">
                 Place Order
             </button>
+            {
+                showToast && <Toast type={toastType} message={toastMessage} />
+            }
         </div>
     );
 };

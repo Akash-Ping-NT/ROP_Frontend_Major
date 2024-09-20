@@ -77,7 +77,7 @@ const CartItemPage = () => {
             fetchCartData();
             setShowToast(true);
             setToastType('success');
-            setToastMessage(res.data);
+            setToastMessage(res.message);
         } catch (error) {
             console.error('Error deleting item', error);
             setShowToast(true);
