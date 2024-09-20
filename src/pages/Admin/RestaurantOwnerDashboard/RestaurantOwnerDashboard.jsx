@@ -52,6 +52,12 @@ const RestaurantAdmin = () => {
   };
 
   const closePopup = () => {
+    setAddress('');
+    setContactInformation('');
+    setOpeningHours('');
+    setRestaurantName('');
+    setDescription('');
+    setImage(null);
     setIsPopupOpen(false);
     setError({});
   };
@@ -105,6 +111,11 @@ const handleSubmit = async (e) => {
         
     } catch (error) {
         console.error('Error creating restaurant:', error);
+        if (error.response && error.response.data.message) {
+        setShowToast(true);
+        setToastMessage(error.response.data.message);
+        setToastType('error');
+        }
         setError(error.response.data);
     }
 

@@ -8,12 +8,7 @@ import Toast from '../Toast.jsx/Toast';
 
 const UserProfile = () => {
   const [userProfile, setUserProfile] = useState({
-    firstName: 'Akash ',
-    lastName: 'Ping',
-    role: 'owner',
-    email: 'asjhdkj@gmial.com',
-    contactNumber: '9876634212',
-    walletBalance: '1823',
+   
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -184,15 +179,16 @@ const UpdateWalletForm = ({ profile, onClose, onSave}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onClose();
+    // onClose();
   };  
 
   const handleUpdate = () => {
     updateWallet(userData.userId, { newBalance: parseFloat(walletBalance) + parseFloat(profile.walletBalance) }).then((response) => {
+      console.log('Profile updated:', response.data);
       onSave(response.data.message);
     }).catch((error) => {
       console.error('Error updating profile:', error);
-      setMessage('Failed to update profile');
+      setMessage(error.response.data);
     });
   };  
 
@@ -207,9 +203,11 @@ const UpdateWalletForm = ({ profile, onClose, onSave}) => {
           type="number"
           value={walletBalance}
           onChange={(e) => setWalletBalance(e.target.value)}
+       
         />
         </div>
       </label>
+      {message?.newBalance && <p className="error">{message?.newBalance}</p>}
       <div className='modal-actions'>
       <button className='success-button' onClick={handleUpdate}>Update Wallet</button> 
       <button className='cancel-button' onClick={onClose}>Cancel</button>

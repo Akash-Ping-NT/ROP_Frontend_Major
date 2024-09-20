@@ -5,11 +5,15 @@ import RestaurantOwnerDashboardSidebar from '../../../components/Sidebar/Restaur
 import RestaurantDashboard from '../../../components/Owner/RestaurantDashboard';
 import { getRestaurantByRestaurantId, getRestaurantByUserId } from '../../../utils/api';
 import RestaurantOrders from '../../../components/Owner/RestaurantOrders';
+import Toast from '../../../components/Toast.jsx/Toast';
 
 const RestaurantOwnerOrders = () => {
   const [restaurant, setRestaurant] = useState({});
   const userId = localStorage.getItem('userId');
   const [ordersData, setOrdersData] = useState([]);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('success');
+  const [showToast, setShowToast] = useState(false);
 
   const navigate = useNavigate();
   const params = useParams();
@@ -41,6 +45,10 @@ useEffect(() => {
                 const data = await response.json();
                 setOrdersData(data); // Store the fetched data in state
             } else {
+                const data = await response.json();
+                setToastMessage(data.message);
+                setToastType('error');
+                setShowToast(true);
                 console.error('Failed to fetch orders data');
             }
         } catch (error) {
@@ -66,6 +74,9 @@ useEffect(() => {
             ))}
         </div>
       </div>
+      {showToast && (
+        <Toast message={toastMessage} type={toastType} onClose={() => setShowToast(false)} />
+      )}
     </div>
   );
 };

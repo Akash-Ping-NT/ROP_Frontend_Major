@@ -49,7 +49,7 @@ const RestaurantPage = () => {
     const fetchCartData = async () => {
         try {
             const response = await axios.get(`http://localhost:8083/api/cart/${userId}/userCart`);
-            setCart(response.data);
+            setCart(response?.data);
             
         } catch (error) {
             console.error("Error fetching cart data", error);
@@ -74,12 +74,12 @@ const RestaurantPage = () => {
             fetchCartData();
             setShowToast(true);
             setToastType('success');
-            setToastMessage(response.data.message);
+            setToastMessage(response?.data?.message);
         } catch (error) {
             console.error('Error adding item to cart', error);
             setShowToast(true);
             setToastType('error');
-            setToastMessage(error.response.data.message);
+            setToastMessage(error?.response?.data?.message);
         }
     };
 
