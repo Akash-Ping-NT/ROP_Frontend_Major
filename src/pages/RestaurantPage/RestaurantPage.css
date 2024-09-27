@@ -87,7 +87,8 @@
 .restaurant-banner {
     position: relative;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-content: center;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -97,6 +98,7 @@
 
 .restaurant-banner-image {
     /* height: 450px; */
+    max-height: 650px;
     width: 60%;
     object-fit: cover;
 }

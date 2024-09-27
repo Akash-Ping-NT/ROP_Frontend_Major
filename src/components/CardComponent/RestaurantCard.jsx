@@ -7,7 +7,8 @@ import defaultImage from '../../assets/restaurant_default.jpg';
 
 const RestaurantCard = ({ id, name, status, imageUrl, openingHours, description }) => {
     return (
-        <Link to={ status === 'Open' ? `/restaurant/${id}` : '#'} className={`restaurant-card-link homepage-card`}>
+        // <Link to={ status === 'Open' ? `/restaurant/${id}` : '#'} className={`restaurant-card-link homepage-card`}>
+        <Link to={`/restaurant/${id}`} className="restaurant-card-link homepage-card">
             <div className={`restaurant-card ${status === 'Open' ? 'open-card' : 'closed-card'}`}>
                 <div className="restaurant-image-container">
                     <img

@@ -36,6 +36,8 @@ const RestaurantEditPopup = ({message, restaurant, isOpen, onClose, onSave }) =>
 
 
     return (
+        <>
+        <div className="modal-overlay"></div>
         <div className="restaurant-edit-popup">
             <div className="restaurant-edit-popup-content">
                 <h2>Edit Restaurant</h2>
@@ -77,8 +79,8 @@ const RestaurantEditPopup = ({message, restaurant, isOpen, onClose, onSave }) =>
                 </div>
                 <div>
                     <label>Opening Hours:</label>
-                    <input
-                        type="text"
+                    <input className='opening-hours'
+                        type="time"
                         value={openingHours}
                         onChange={(e) => setOpeningHours(e.target.value)}
                     />
@@ -94,6 +96,7 @@ const RestaurantEditPopup = ({message, restaurant, isOpen, onClose, onSave }) =>
                             onChange={handleImageChange}
                         />
                     {message.image && <p className="error">{message.image}</p>}
+                    {message.message && <p className="error">{message.message}</p>}
                 </div>
                 <div className="restaurant-edit-popup-buttons">
                     <button onClick={handleSave}>Save</button>
@@ -101,6 +104,7 @@ const RestaurantEditPopup = ({message, restaurant, isOpen, onClose, onSave }) =>
                 </div>
             </div>
         </div>
+        </>
     );
 };
 

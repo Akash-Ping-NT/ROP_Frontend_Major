@@ -3,7 +3,7 @@ import './RestaurantDashboard.css';
 import RestaurantEditPopup from './RestaurantEditPopup';
 import axios from 'axios';
 import EditIcon from '../../assets/Edit-Linear-32px.svg';
-
+import Toast from '../Toast.jsx/Toast';
 import defaultImage from '../../assets/restaurant_default.jpg';
 
 
@@ -11,10 +11,28 @@ const RestaurantDashboard = ({ restaurant, setRestaurant, refreshData }) => {
     const [restaurantOpen, setRestaurantOpen] = useState(false);
     const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
     const [message, setMessage] = useState({});
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastType, setToastType] = useState('success');
 
     useEffect(() => {
         setRestaurantOpen(restaurant.open);
     }, [restaurant]);
+
+    useEffect(() => {
+        
+    }, [showToast]);
+
+    const convertTo12HourFormat = (time24) => {
+
+        if (!time24) {
+            return 'N/A'; 
+        }
+        const [hours, minutes] = time24.split(':');
+        const hour12 = hours % 12 || 12; 
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        return `${hour12}:${minutes} ${ampm}`;
+    };
 
     const updateStatus = async () => {
         try {
@@ -43,11 +61,22 @@ const RestaurantDashboard = ({ restaurant, setRestaurant, refreshData }) => {
                 }
             });
 
+            if(response.status === 200) {
+                setToastMessage(response.data.message);
+                setToastType('success');
+                setShowToast(true);
+  
+            }else{
+                setToastMessage(response.data.message);
+                setToastType('error');
+                setShowToast(true);
+            }
             // Call refreshData to fetch updated restaurant info
             refreshData();
 
             // Close the popup
             setIsEditPopupOpen(false);
+
 
         } catch (error) {
             console.error('Error updating restaurant:', error);
@@ -84,7 +113,7 @@ const RestaurantDashboard = ({ restaurant, setRestaurant, refreshData }) => {
             <div className="restaurant-dashboard-details">
                 <span><strong>Address:</strong> {restaurant.address}</span>
                 <span><strong>Contact Number:</strong> {restaurant.contactNo}</span>
-                <span><strong>Opening Hours:</strong> {restaurant.openingHours}</span>
+                <span><strong>Opening Hours:</strong> {convertTo12HourFormat(restaurant.openingHours)}</span>
             </div>
             
             <RestaurantEditPopup
@@ -94,6 +123,7 @@ const RestaurantDashboard = ({ restaurant, setRestaurant, refreshData }) => {
                 onClose={handleEditClose}
                 onSave={handleEditSave}
             />
+             {showToast && <Toast message={toastMessage} onClose={()=>{setShowToast(false)}} showToast={showToast} type={toastType}  /> }
         </div>
     );
 };

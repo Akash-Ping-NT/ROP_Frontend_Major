@@ -114,7 +114,7 @@ const UpdateProfileForm = ({ profile, onClose, onSave}) => {
       
       onSave();
     }).catch((error) => {
-      // console.error('Error updating profile:', error);
+      console.error('Error updating profile:', error);
       
       setMessage(error.response.data);
     });
@@ -160,6 +160,7 @@ const UpdateProfileForm = ({ profile, onClose, onSave}) => {
           onChange={(e) => setEmail(e.target.value)}
         />
       {message.email && <p className="error">{message?.email}</p>}
+      {message.message && <p className="error">{message?.message}</p>}
       <div className='modal-actions'>
       <button className='success-button' onClick={handleUpdate}>Update Profile</button>
       <button className='cancel-button' onClick={onClose}>Cancel</button>
