@@ -70,7 +70,10 @@ useEffect(() => {
         )
         }
             {ordersData.map((order) => (
-                <RestaurantOrders key={order.id} orderData={order} />
+                <RestaurantOrders key={order.id} orderData={order}
+                setShowToast={setShowToast}
+                setToastType={setToastType}
+                setToastMessage={setToastMessage}/>
             ))}
         </div>
       </div>

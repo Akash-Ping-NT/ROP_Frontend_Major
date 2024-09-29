@@ -5,21 +5,25 @@ import { useSelector } from 'react-redux';
 import { cancelOrderByOrderId, updateOrderStatus } from '../../utils/api';
 import Toast from '../Toast.jsx/Toast';
 
-const RestaurantOrders = ({ orderData }) => {
+const RestaurantOrders = ({ orderData, setShowToast, setToastType, setToastMessage }) => {
    
     const [status, setStatus] = useState(orderData.status);
     const userId = useSelector((state) => state.auth.user.userId);
-    const [showToast, setShowToast] = useState(false);
-    const [toastType, setToastType] = useState('success');
-    const [toastMessage, setToastMessage] = useState('');
+    // const [showToast, setShowToast] = useState(false);
+    // const [toastType, setToastType] = useState('success');
+    // const [toastMessage, setToastMessage] = useState('');
 
     const handleStatusChange = async (newStatus) => {
+        const previousStatus = status;
         setStatus(newStatus);
         try {
             const response = await updateOrderStatus(orderData.id, newStatus, userId);
             
         } catch (error) {
-            console.error('Error updating order status', error);
+            setStatus(previousStatus);
+            setShowToast(true);
+            setToastType('error');
+            setToastMessage(error.response?.data?.message || 'Error updating order status');
         }
     };
 
@@ -89,7 +93,7 @@ const RestaurantOrders = ({ orderData }) => {
                     <p className="completed-message">Order Completed</p>
                 )}
             </div>
-            {showToast && ( <Toast type={toastType} message={toastMessage} onClose={() => setShowToast(false)} />)}
+            {/* {showToast && ( <Toast type={toastType} message={toastMessage} onClose={() => setShowToast(false)} />)} */}
         </div>
     );
 };
