@@ -46,6 +46,18 @@ const RestaurantPage = () => {
         }
     }, [id]);
 
+
+    const convertTo12HourFormat = (time24) => {
+        if (!time24) {
+            return 'N/A'; 
+        }
+
+        const [hours, minutes] = time24.split(':');
+        const hour12 = hours % 12 || 12; 
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        return `${hour12}:${minutes} ${ampm}`;
+    };
+
     const fetchCartData = async () => {
         try {
             const response = await axios.get(`http://localhost:8083/api/cart/${userId}/userCart`);
@@ -125,7 +137,8 @@ const RestaurantPage = () => {
                     <div className="restaurant-banner-content">
                         <h1 className="restaurant-name">{restaurant.restaurantName}</h1>
                         <p className='restaurant-description'>{restaurant.description}</p>
-                        <p className="restaurant-hours">Opening Hours: {restaurant.openingHours}</p>
+                        {/* <p className="restaurant-hours">Opening Hours: {restaurant.openingHours}</p> */}
+                        <p className="restaurant-hours">Opening Hours:  {convertTo12HourFormat(restaurant.openingHours)}</p>
                         <p className='restaurant-address'>{restaurant.address}</p>
                         <p className='restaurant-contact'>{restaurant.contactNo}</p>
                     </div>

@@ -162,7 +162,7 @@ const handleSubmit = async (e) => {
                             {error?.address && <p className="error">{error.address}</p>}
               <input type="text" value={contactInformation} onChange={(e) => setContactInformation(e.target.value)} placeholder="Contact Information" required />
               {error?.contactInformation && <p className="error">{error.contactInformation}</p>}
-              <input type="text" value={openingHours} onChange={(e) => setOpeningHours(e.target.value)} placeholder="Opening Hours" required />
+              <input type="time" value={openingHours} onChange={(e) => setOpeningHours(e.target.value)} placeholder="Opening Hours" required />
               {error?.openingHours && <p className="error">{error.openingHours}</p>}
               <input type="file" onChange={handleImageChange} placeholder="Upload Restaurant Image" required />
               {error?.image && <p className="error">{error.image}</p>}

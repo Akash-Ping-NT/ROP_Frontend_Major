@@ -90,3 +90,12 @@
 .create-restaurant-container button[type="submit"]:hover {
   background-color: #f2a42f;
 }
+
+
+.createRes-time-div{
+  width: 56%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}

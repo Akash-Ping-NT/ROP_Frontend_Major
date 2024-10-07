@@ -109,7 +109,8 @@ const CreateRestaurantForm = () => {
                         Opening Hours:
                     </label>
                         <input
-                            type="text"
+                            className='createRes-time-div'
+                            type="time"
                             value={openingHours}
                             placeholder='09:00 AM - 11:00 PM'
                             onChange={(e) => setOpeningHours(e.target.value)}

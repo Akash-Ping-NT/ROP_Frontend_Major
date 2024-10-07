@@ -6,7 +6,7 @@
     background-color: white;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    z-index: 1001;
     border-radius: 8px;
 }
 
@@ -56,4 +56,24 @@
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s ease; 
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Darkens the background */
+    z-index: 1000; /* Placed behind the modal but above the rest of the content */
+}
+
+.opening-hours{
+    width: 100%;
+    max-width: -webkit-fill-available;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 10px;
 }

@@ -101,6 +101,7 @@
 /* Form inputs inside the popup */
 .popup form input {
   width: 100%;
+  max-width: -webkit-fill-available;
   padding: 12px;
   margin-bottom: 20px;
   border: 1px solid #ddd;
