@@ -15,7 +15,7 @@ const UserAddress = () => {
   const [currentAddressId, setCurrentAddressId] = useState(null);
   const [addressForm, setAddressForm] = useState({
     city: '',
-    country: '',
+    country: 'India',
     postalCode: '',
     state: '',
     streetAddress: ''
@@ -37,7 +37,7 @@ const UserAddress = () => {
 
 
   const handleCreateAddress = () => {
-    setAddressForm({ city: '', country: '', postalCode: '', state: '', streetAddress: '' });
+    setAddressForm({ city: '', country: 'India', postalCode: '', state: '', streetAddress: '' });
     setErrors({})
     setIsEditing(false);
     setShowPopup(true);
@@ -47,7 +47,8 @@ const UserAddress = () => {
     const addressToEdit = addresses.find(address => address.addressId === id);
     setAddressForm({
       city: addressToEdit.city,
-      country: addressToEdit.country,
+      // country: addressToEdit.country,
+      country: 'India',
       postalCode: addressToEdit.postalCode,
       state: addressToEdit.state,
       streetAddress: addressToEdit.street
@@ -226,7 +227,8 @@ const UserAddress = () => {
               name="country"
               placeholder="Country"
               value={addressForm.country}
-              onChange={handleInputChange}
+              // onChange={handleInputChange}
+              readOnly
             />
              {errors.country && <p className="error">{errors.country}</p>}
 
